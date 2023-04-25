@@ -1,9 +1,14 @@
 package View;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
 
 public class MainJFrame extends JFrame {
 
@@ -15,6 +20,12 @@ public class MainJFrame extends JFrame {
     private JMenuItem addMenu, deleteMenu, updateMenu, displayMenu;
     private JMenuItem queryMenu, taskMenu;
     private JMenuItem quitMenu;
+
+    private JPanel main;
+    private Footer footer;
+
+    private ImageShop[] imageShops = new ImageShop[6];
+
 
     public MainJFrame(){
 
@@ -29,6 +40,24 @@ public class MainJFrame extends JFrame {
                 System.exit(0);
             }
         });
+
+
+        //Load IMGs
+        BufferedImage img = null;
+        File path = new File("Icons");
+        int i = 0;
+        for (File file : path.listFiles()) {
+            try {
+                img = ImageIO.read(file);
+                if (img != null) {
+                    imageShops[i] = new ImageShop(img, (i % 2  == 0) ? 0 : 1);
+                    i++;
+                }
+            } catch (IOException e) {
+                continue;
+            }
+        }
+
 
         setVisible(true);
 
@@ -61,9 +90,20 @@ public class MainJFrame extends JFrame {
         menuBar.add(menuSearch);
         menuBar.add(menuApplication);
 
-        ButtonAddItemPanel buttonAddItemPanel = new ButtonAddItemPanel(container);
-        addMenu.addActionListener(buttonAddItemPanel);
 
+
+        main = new JPanel();
+        footer = new Footer(imageShops, this);
+
+        footer.setPreferredSize(new Dimension(this.getWidth(), 50));
+        container.add(main,BorderLayout.CENTER);
+        container.add(footer,BorderLayout.SOUTH);
+
+        MovementThread movementImage = new MovementThread(imageShops, footer, this);
+        movementImage.start();
+
+        ButtonAddItemPanel buttonAddItemPanel = new ButtonAddItemPanel(main);
+        addMenu.addActionListener(buttonAddItemPanel);
 
 
         //Refresh display

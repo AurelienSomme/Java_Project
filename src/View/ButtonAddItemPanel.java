@@ -9,17 +9,17 @@ public class ButtonAddItemPanel implements ActionListener {
 
     private JPanel addItemPanel;
 
-    private Container container;
+    private JPanel main;
 
-    public ButtonAddItemPanel(Container container){
-        this.container = container;
+    public ButtonAddItemPanel(JPanel main){
+        this.main = main;
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        container.removeAll();
+        main.removeAll();
         addItemPanel = new AddItemPanel();
-        container.revalidate();
-        container.add(addItemPanel);
+        main.revalidate();
+        main.add(addItemPanel);
     }
 }
