@@ -23,7 +23,7 @@ public class MainJFrame extends JFrame {
         setBounds(80, 15, 1200, 800);
 
 
-        //Allow to close program with the red cross
+        //Allow closing program with the red cross
         addWindowListener(new WindowAdapter() {
             public void windowClosing (WindowEvent e){
                 System.exit(0);
@@ -60,6 +60,10 @@ public class MainJFrame extends JFrame {
         menuBar.add(menuItem);
         menuBar.add(menuSearch);
         menuBar.add(menuApplication);
+
+        ButtonAddItemPanel buttonAddItemPanel = new ButtonAddItemPanel(container);
+        addMenu.addActionListener(buttonAddItemPanel);
+
 
 
         //Refresh display
