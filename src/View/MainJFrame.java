@@ -105,6 +105,9 @@ public class MainJFrame extends JFrame {
         ButtonAddItemPanel buttonAddItemPanel = new ButtonAddItemPanel(main);
         addMenu.addActionListener(buttonAddItemPanel);
 
+        ButtonDeleteItemPanel buttonDeleteItemPanel = new ButtonDeleteItemPanel(main);
+        deleteMenu.addActionListener(buttonDeleteItemPanel);
+
 
         //Refresh display
         revalidate();
