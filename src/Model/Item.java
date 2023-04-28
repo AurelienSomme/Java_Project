@@ -78,4 +78,10 @@ public class Item {
     public void setProductionDate(GregorianCalendar productionDate){
         this.productionDate = productionDate;
     }
+
+
+
+    public String toString(){
+        return code + " " + refBrand + " " + name + " " + catalogPrice + " " + packaging + " " + VAT  + " " + stockQuantity + " " + thresholdLimit + " " + automaticOrder  + " " + saleDate + " " + productionDate  + " " + reductionPoints;
+    }
 }

@@ -6,7 +6,7 @@ import java.awt.*;
 public class AddItemPanel extends JPanel {
     //Panels
     private JPanel itemFormPanel;
-    private JPanel orderPanel, dateSalePanel, dateProdPanel;
+    private JPanel orderPanel, dateSalePanel, dateProdPanel, dateProdForm;
     private JPanel buttonPanel;
     private JPanel elementsPanel;
 
@@ -23,6 +23,7 @@ public class AddItemPanel extends JPanel {
     //Optional
     private JTextField reductionPointText;
     private JComboBox<String> prodDay, prodMonth, prodYear;
+    private JCheckBox optionalButtonProductionDate;
 
     private JButton addItem;
 
@@ -73,14 +74,25 @@ public class AddItemPanel extends JPanel {
 
 
         //Optional
+        optionalButtonProductionDate = new JCheckBox("Yes", false);
         prodDay = new JComboBox<>(days);
         prodMonth = new JComboBox<>(months);
         prodYear = new JComboBox<>(years);
+        prodDay.setEnabled(false);
+        prodMonth.setEnabled(false);
+        prodYear.setEnabled(false);
+        dateProdForm = new JPanel();
         dateProdPanel = new JPanel();
         dateProdPanel.add(prodDay);
         dateProdPanel.add(prodMonth);
         dateProdPanel.add(prodYear);
 
+        ButtonOptionalDate listenerCheckDate = new ButtonOptionalDate(prodDay, prodMonth, prodYear, optionalButtonProductionDate);
+        optionalButtonProductionDate.addActionListener(listenerCheckDate);
+
+        dateProdForm.add(optionalButtonProductionDate);
+        dateProdForm.add(dateProdPanel);
+        dateProdForm.setLayout(new GridLayout(1,2));
         reductionPointText = new JTextField();
 
         itemFormPanel = new JPanel();
@@ -129,14 +141,18 @@ public class AddItemPanel extends JPanel {
         itemFormPanel.add(reductionPointText);
 
         itemFormPanel.add(productionDate);
-        itemFormPanel.add(dateProdPanel);
+        itemFormPanel.add(dateProdForm);
 
 
 
         itemFormPanel.setLayout(new GridLayout(12, 2));
 
         addItem = new JButton("Add");
-        ButtonAddItem buttonAddItem = new ButtonAddItem();
+        ButtonAddItem buttonAddItem = new ButtonAddItem(codeText, refBrandText,
+                nameText, catalogPriceText, reductionPointText, packagingText, vatText,
+                stockQuantityText, thresholdLimitText, yesAutomaticOrder, prodYear, prodMonth,
+                prodDay, saleYear, saleMonth, saleDay, optionalButtonProductionDate);
+
         addItem.addActionListener(buttonAddItem);
 
         buttonPanel = new JPanel();

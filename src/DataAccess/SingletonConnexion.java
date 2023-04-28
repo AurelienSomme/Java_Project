@@ -14,7 +14,7 @@ public class SingletonConnexion {
 
     public static Connection getInstance() throws SQLException{
         if (singleConnection == null){
-            singleConnection = new SingletonConnexion();
+            //singleConnection = new SingletonConnexion();
             boolean retry = true;
 
             char[] charpassword;
