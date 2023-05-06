@@ -1,5 +1,7 @@
 package View;
 
+import Controller.ApplicationController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,14 +13,18 @@ public class ButtonAddItemPanel implements ActionListener {
 
     private JPanel main;
 
-    public ButtonAddItemPanel(JPanel main){
+    private ApplicationController controller;
+
+    public ButtonAddItemPanel(JPanel main, ApplicationController controller){
+
         this.main = main;
+        this.controller = controller;
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
         main.removeAll();
-        addItemPanel = new AddItemPanel();
+        addItemPanel = new AddItemPanel(controller);
         main.revalidate();
         main.add(addItemPanel);
     }

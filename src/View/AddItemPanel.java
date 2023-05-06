@@ -1,5 +1,7 @@
 package View;
 
+import Controller.ApplicationController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -27,8 +29,10 @@ public class AddItemPanel extends JPanel {
 
     private JButton addItem;
 
-    public AddItemPanel(){
+    private ApplicationController controller;
 
+    public AddItemPanel(ApplicationController controller){
+        this.controller = controller;
         //Init Labels
         code = new JLabel("Code");
         name = new JLabel("Name");
@@ -150,8 +154,8 @@ public class AddItemPanel extends JPanel {
         addItem = new JButton("Add");
         ButtonAddItem buttonAddItem = new ButtonAddItem(codeText, refBrandText,
                 nameText, catalogPriceText, reductionPointText, packagingText, vatText,
-                stockQuantityText, thresholdLimitText, yesAutomaticOrder, prodYear, prodMonth,
-                prodDay, saleYear, saleMonth, saleDay, optionalButtonProductionDate);
+                stockQuantityText, thresholdLimitText, yesAutomaticOrder, noAutomaticOrder, prodYear, prodMonth,
+                prodDay, saleYear, saleMonth, saleDay, optionalButtonProductionDate, controller);
 
         addItem.addActionListener(buttonAddItem);
 

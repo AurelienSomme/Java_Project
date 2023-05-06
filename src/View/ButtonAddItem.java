@@ -1,10 +1,12 @@
 package View;
+import Controller.ApplicationController;
 import Model.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.GregorianCalendar;
 
 public class ButtonAddItem implements ActionListener {
@@ -12,7 +14,7 @@ public class ButtonAddItem implements ActionListener {
     private JTextField codeText,nameText, catalogPriceText, packagingText, vatText, stockQuantityText, thresholdLimitText, refBrandText, reductionPointsText;
     private JComboBox<String> prodDay, prodMonth, prodYear;
     private JComboBox<String> saleDay, saleMonth, saleYear;
-    private JRadioButton yesAutomaticOrder;
+    private JRadioButton yesAutomaticOrder, noAutomaticOrder;
     private Item item;
 
     private String code;
@@ -28,13 +30,14 @@ public class ButtonAddItem implements ActionListener {
     private GregorianCalendar productionDate;
     private GregorianCalendar saleDate;
     private JCheckBox optionalButtonProductionDate;
+    private ApplicationController controller;
 
     public ButtonAddItem(JTextField codeText, JTextField refBrandText, JTextField nameText,
                          JTextField catalogPriceText, JTextField reductionPointsText,
                          JTextField packagingText, JTextField vatText, JTextField stockQuantityText,
-                         JTextField thresholdLimitText, JRadioButton yesAutomaticOrder, JComboBox prodYear,
+                         JTextField thresholdLimitText, JRadioButton yesAutomaticOrder, JRadioButton noAutomaticOrder, JComboBox prodYear,
                          JComboBox prodMonth, JComboBox prodDay, JComboBox saleYear, JComboBox saleMonth,
-                         JComboBox saleDay, JCheckBox optionalButtonProductionDate){
+                         JComboBox saleDay, JCheckBox optionalButtonProductionDate, ApplicationController controller){
         this.codeText = codeText;
         this.nameText = nameText;
         this.catalogPriceText = catalogPriceText;
@@ -51,13 +54,15 @@ public class ButtonAddItem implements ActionListener {
         this.saleMonth = saleMonth;
         this.saleDay = saleDay;
         this.yesAutomaticOrder = yesAutomaticOrder;
+        this.noAutomaticOrder = noAutomaticOrder;
         this.optionalButtonProductionDate = optionalButtonProductionDate;
-
+        this.controller = controller;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Boolean isAttributed = false;
+        boolean isAttributed = false;
+        boolean isAdded;
         try {
             isAttributed = setAttributeItem();
         }
@@ -85,9 +90,34 @@ public class ButtonAddItem implements ActionListener {
                         JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);;
                     }
             }
-            System.out.println(item);
+            try {
+                isAdded = controller.addItem(item);
+                if(isAdded) {
+                    JOptionPane.showMessageDialog(null, "The item has been added", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    codeText.setText("");
+                    refBrandText.setText("");
+                    nameText.setText("");
+                    catalogPriceText.setText("");
+                    packagingText.setText("");
+                    vatText.setText("");
+                    stockQuantityText.setText("");
+                    thresholdLimitText.setText("");
+                    yesAutomaticOrder.setSelected(true);
+                    noAutomaticOrder.setSelected(false);
+                    prodDay.setSelectedIndex(0);
+                    prodMonth.setSelectedIndex(0);
+                    prodYear.setSelectedIndex(0);
+                    saleDay.setSelectedIndex(0);
+                    saleMonth.setSelectedIndex(0);
+                    saleYear.setSelectedIndex(0);
+                    optionalButtonProductionDate.setSelected(false);
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "The item has not been added (code already in DB or ref_brand not in DB)", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-
     }
 
 

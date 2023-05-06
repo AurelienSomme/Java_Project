@@ -1,5 +1,7 @@
 package View;
 
+import Controller.ApplicationController;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -8,11 +10,13 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.sql.SQLException;
 
 public class MainJFrame extends JFrame {
 
     private Container container;
+
+    private PasswordPanel passwordPanel;
 
     private JMenuBar menuBar;
     private JMenu menuItem, menuSearch, menuApplication;
@@ -25,6 +29,8 @@ public class MainJFrame extends JFrame {
     private Footer footer;
 
     private ImageShop[] imageShops = new ImageShop[6];
+
+    private ApplicationController controller;
 
 
     public MainJFrame(){
@@ -63,6 +69,19 @@ public class MainJFrame extends JFrame {
 
         container = getContentPane();
 
+        passwordPanel = new PasswordPanel(this);
+
+        container.add(passwordPanel);
+
+        revalidate();
+
+
+    }
+
+
+    public void setElementFrame() throws SQLException {
+        setController(new ApplicationController());
+        container.removeAll();
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
@@ -102,18 +121,21 @@ public class MainJFrame extends JFrame {
         MovementThread movementImage = new MovementThread(imageShops, footer, this);
         movementImage.start();
 
-        ButtonAddItemPanel buttonAddItemPanel = new ButtonAddItemPanel(main);
+        //Adding Button Item
+        ButtonAddItemPanel buttonAddItemPanel = new ButtonAddItemPanel(main, controller);
         addMenu.addActionListener(buttonAddItemPanel);
 
-        ButtonDeleteItemPanel buttonDeleteItemPanel = new ButtonDeleteItemPanel(main);
+        //Deleting Button Item
+        ButtonDeleteItemPanel buttonDeleteItemPanel = new ButtonDeleteItemPanel(main, controller);
         deleteMenu.addActionListener(buttonDeleteItemPanel);
 
 
         //Refresh display
         revalidate();
+    }
 
-
-
+    public void setController(ApplicationController controller){
+        this.controller = controller;
     }
 
 }
