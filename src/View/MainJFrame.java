@@ -133,6 +133,10 @@ public class MainJFrame extends JFrame {
         ButtonDisplayItems buttonDisplayItems = new ButtonDisplayItems(main, controller);
         displayMenu.addActionListener(buttonDisplayItems);
 
+        //Update Button Item
+        ButtonUpdateItemPanel buttonUpdateItemPanel = new ButtonUpdateItemPanel(main, controller);
+        updateMenu.addActionListener(buttonUpdateItemPanel);
+
 
         //Refresh display
         revalidate();

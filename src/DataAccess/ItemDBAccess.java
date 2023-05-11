@@ -2,12 +2,11 @@ package DataAccess;
 
 import Model.Item;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.math.BigDecimal;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Map;
 
 public class ItemDBAccess implements ItemDataAccess{
 
@@ -17,6 +16,35 @@ public class ItemDBAccess implements ItemDataAccess{
     public ItemDBAccess() throws SQLException {
         singletonConnexion = SingletonConnection.getInstance();
         connection = singletonConnexion.getConnection();
+    }
+
+
+    public Item getItem(String code) throws SQLException {
+        String getItemInstruction = "select * from item where code = ?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(getItemInstruction);
+        preparedStatement.setInt(1, Integer.parseInt(code));
+        ResultSet data = preparedStatement.executeQuery();
+        Item item = null;
+        while (data.next()) {
+            GregorianCalendar gregProdDate = new GregorianCalendar();
+            GregorianCalendar gregSaleDate = new GregorianCalendar();
+            gregSaleDate.setTime(data.getDate("sale_date"));
+
+            item = new Item(data.getString("code"), data.getInt("ref_brand"), data.getString("name"),
+                    data.getBigDecimal("catalog_price"), data.getString("packaging"),
+                    data.getBigDecimal("VAT"), data.getBigDecimal("stock_quantity"),
+                    data.getBigDecimal("threshold_limit"), data.getBoolean("automatic_order"),
+                    gregSaleDate);
+
+            if (data.getDate("production_date") != null) {
+                gregProdDate.setTime(data.getDate("production_date"));
+                item.setProductionDate(gregProdDate);
+            }
+            if (data.getBigDecimal("reduction_points") != null) {
+                item.setReductionPoints(data.getBigDecimal("reduction_points"));
+            }
+        }
+        return item;
     }
 
     @Override
@@ -110,6 +138,33 @@ public class ItemDBAccess implements ItemDataAccess{
         String deleteInstruction = "DELETE FROM item where code = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(deleteInstruction);
         preparedStatement.setString(1, code);
+        int nbUpdatedLines = preparedStatement.executeUpdate();
+        return (nbUpdatedLines != 0);
+    }
+
+
+    @Override
+    public Boolean updateItem(int code, Map<String, Object> updateValues) throws SQLException {
+        String updateInstructionHead = "UPDATE item SET ";
+        String updateInstructionBody = "";
+        String updateInstructionWhere = "WHERE code = ?";
+        int i = 1;
+        for (Map.Entry<String, Object> entry : updateValues.entrySet()) {
+            updateInstructionBody += entry.getKey() + " = ?";
+            if (i < updateValues.size())
+                updateInstructionBody += ", ";
+            i++;
+        }
+        String updateInstruction = updateInstructionHead + updateInstructionBody + " " + updateInstructionWhere;
+        PreparedStatement preparedStatement = connection.prepareStatement(updateInstruction);
+
+        i = 1;
+        for (Map.Entry<String, Object> entry : updateValues.entrySet()) {
+            Object value = entry.getValue();
+            preparedStatement.setObject(i, value);
+            i++;
+        }
+        preparedStatement.setInt(i, code);
         int nbUpdatedLines = preparedStatement.executeUpdate();
         return (nbUpdatedLines != 0);
     }

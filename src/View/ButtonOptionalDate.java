@@ -6,30 +6,30 @@ import java.awt.event.ActionListener;
 
 public class ButtonOptionalDate implements ActionListener {
 
-    private JComboBox<String> prodDay, prodMonth, prodYear = new JComboBox<>();
+    private JComboBox<String> day, month, year;
     private JCheckBox checkBox;
 
-    public ButtonOptionalDate(JComboBox<String> prodDay, JComboBox<String> prodMonth, JComboBox<String>prodYear, JCheckBox checkBox){
-        this.prodDay = prodDay;
-        this.prodMonth = prodMonth;
-        this.prodYear = prodYear;
+    public ButtonOptionalDate(JComboBox<String> day, JComboBox<String> month, JComboBox<String>year, JCheckBox checkBox){
+        this.day = day;
+        this.month = month;
+        this.year = year;
         this.checkBox = checkBox;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(checkBox.isSelected()){
-            prodDay.setEnabled(true);
-            prodMonth.setEnabled(true);
-            prodYear.setEnabled(true);
+            day.setEnabled(true);
+            month.setEnabled(true);
+            year.setEnabled(true);
         }
         else{
-            prodDay.setEnabled(false);
-            prodMonth.setEnabled(false);
-            prodYear.setEnabled(false);
-            prodDay.setSelectedIndex(0);
-            prodMonth.setSelectedIndex(0);
-            prodYear.setSelectedIndex(0);
+            day.setEnabled(false);
+            month.setEnabled(false);
+            year.setEnabled(false);
+            day.setSelectedIndex(0);
+            month.setSelectedIndex(0);
+            year.setSelectedIndex(0);
         }
     }
 }

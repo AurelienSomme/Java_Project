@@ -18,7 +18,7 @@ public class AddItemPanel extends JPanel {
     private JLabel reductionPoint, productionDate;
 
     //Items form
-    private JTextField codeText,nameText, catalogPriceText, packagingText, vatText, stockQuantityText, thresholdLimitText, refBrandText;
+    private JTextField codeText, nameText, catalogPriceText, packagingText, vatText, stockQuantityText, thresholdLimitText, refBrandText;
     private JRadioButton yesAutomaticOrder, noAutomaticOrder;
     private ButtonGroup groupAutomaticOrder;
     private JComboBox<String> saleDay, saleMonth, saleYear;

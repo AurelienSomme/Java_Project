@@ -6,6 +6,7 @@ import Model.Item;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ApplicationController {
 
@@ -20,6 +21,10 @@ public class ApplicationController {
     }
 
 
+    public Item getItem(String code) throws SQLException {
+        return dao.getItem(code);
+    }
+
     public ArrayList<Item> getAllItems() throws SQLException {
         return dao.getAllItems();
     }
@@ -30,5 +35,8 @@ public class ApplicationController {
 
     public boolean deleteItem(String code) throws SQLException {
         return dao.deleteItem(code);
+    }
+    public Boolean updateItem(int code, Map<String, Object> updateValues) throws SQLException {
+        return dao.updateItem(code, updateValues);
     }
 }
