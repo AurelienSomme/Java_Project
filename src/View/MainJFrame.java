@@ -129,6 +129,10 @@ public class MainJFrame extends JFrame {
         ButtonDeleteItemPanel buttonDeleteItemPanel = new ButtonDeleteItemPanel(main, controller);
         deleteMenu.addActionListener(buttonDeleteItemPanel);
 
+        //Displaying Button Item
+        ButtonDisplayItems buttonDisplayItems = new ButtonDisplayItems(main, controller);
+        displayMenu.addActionListener(buttonDisplayItems);
+
 
         //Refresh display
         revalidate();

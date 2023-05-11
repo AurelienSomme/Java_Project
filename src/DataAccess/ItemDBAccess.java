@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class ItemDBAccess implements ItemDataAccess{
 
@@ -20,7 +21,39 @@ public class ItemDBAccess implements ItemDataAccess{
 
     @Override
     public ArrayList<Item> getAllItems() throws SQLException {
-        return null;
+        String getAllItemsInstruction = "select * from item;";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(getAllItemsInstruction);
+        ResultSet data = preparedStatement.executeQuery();
+
+        ArrayList<Item> allItems = new ArrayList<>();
+
+        Item item;
+
+        while (data.next()){
+
+            GregorianCalendar gregProdDate = new GregorianCalendar();
+            GregorianCalendar gregSaleDate = new GregorianCalendar();
+            gregSaleDate.setTime(data.getDate("sale_date"));
+
+            item = new Item(data.getString("code"),data.getInt("ref_brand"), data.getString("name"),
+                    data.getBigDecimal("catalog_price"), data.getString("packaging"),
+                    data.getBigDecimal("VAT"), data.getBigDecimal("stock_quantity"),
+                    data.getBigDecimal("threshold_limit"), data.getBoolean("automatic_order"),
+                    gregSaleDate);
+
+            if(data.getDate("production_date") != null){
+                gregProdDate.setTime(data.getDate("production_date"));
+                item.setProductionDate(gregProdDate);
+            }
+            if(data.getBigDecimal("reduction_points") != null){
+                item.setReductionPoints(data.getBigDecimal("reduction_points"));
+            }
+
+            allItems.add(item);
+        }
+
+        return allItems;
     }
 
     @Override
