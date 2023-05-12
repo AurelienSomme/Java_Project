@@ -137,6 +137,10 @@ public class MainJFrame extends JFrame {
         ButtonUpdateItemPanel buttonUpdateItemPanel = new ButtonUpdateItemPanel(main, controller);
         updateMenu.addActionListener(buttonUpdateItemPanel);
 
+        //Query Button
+        ButtonQueryPanel buttonQueryPanel = new ButtonQueryPanel(main, controller);
+        queryMenu.addActionListener(buttonQueryPanel);
+
 
         //Refresh display
         revalidate();
