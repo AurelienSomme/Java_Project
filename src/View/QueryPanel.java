@@ -4,6 +4,8 @@ import Controller.ApplicationController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class QueryPanel extends JPanel {
     private JPanel panel1, panel2, panel3;
@@ -22,9 +24,10 @@ public class QueryPanel extends JPanel {
 
     //Query 3 Form
     private JLabel date;
-    private JSpinner dateSpinner;
+    private JComboBox<String> dateDay, dateMonth, dateYear;
+    private JPanel panelDate;
 
-    public QueryPanel(ApplicationController controller){
+    public QueryPanel(ApplicationController controller) throws SQLException {
         this.controller = controller;
 
         buttonQuery1 = new JButton("Query 1");
@@ -34,10 +37,16 @@ public class QueryPanel extends JPanel {
         panel1 = new JPanel();
         queryPanel1 = new JPanel();
         queryPanel1.setLayout(new GridLayout(1, 2));
-        nameBrand = new JLabel("Brand Name");
+        nameBrand = new JLabel("Brand Id");
         queryPanel1.add(nameBrand);
-        //controller.getIdsBrands
+        ArrayList<Integer> idsBrands;
+        idsBrands = controller.getAllIdsBrands();
         refBrandComboBox = new JComboBox<>();
+        DefaultComboBoxModel<Integer> modelBrands = new DefaultComboBoxModel<>();
+        modelBrands.addAll(idsBrands);
+        refBrandComboBox.setModel(modelBrands);
+        if(idsBrands.size() != 0)
+            refBrandComboBox.setSelectedIndex(0);
         queryPanel1.add(refBrandComboBox);
 
         panel1.add(queryPanel1);
@@ -52,10 +61,17 @@ public class QueryPanel extends JPanel {
         panel2 = new JPanel();
         queryPanel2 = new JPanel();
         queryPanel2.setLayout(new GridLayout(1, 2));
-        nameAffair = new JLabel("Affair Name");
+        nameAffair = new JLabel("Affair Id");
         queryPanel2.add(nameAffair);
-        //controller.getIdsAffairs
+        ArrayList<Integer> idsAffairs;
+        idsAffairs = controller.getAllIdsAffairs();
+
+        DefaultComboBoxModel<Integer> modelAffairs = new DefaultComboBoxModel<>();
+        modelBrands.addAll(idsAffairs);
         refAffairComboBox = new JComboBox<>();
+        refAffairComboBox.setModel(modelAffairs);
+        if(idsAffairs.size() != 0)
+            refAffairComboBox.setSelectedIndex(0);
         queryPanel2.add(refAffairComboBox);
 
         panel2.add(queryPanel2);
@@ -65,6 +81,9 @@ public class QueryPanel extends JPanel {
 
 
 
+        String[] days = {"1", "2" ,"3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" ,"17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+        String[] months = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        String[] years = {"2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"};
 
 
         panel3 = new JPanel();
@@ -72,10 +91,15 @@ public class QueryPanel extends JPanel {
         queryPanel3.setLayout(new GridLayout(1, 2));
         date = new JLabel("Date");
         queryPanel3.add(date);
-        //controller.getDate
-        dateSpinner = new JSpinner();
-        queryPanel3.add(dateSpinner);
+        panelDate = new JPanel();
+        dateDay = new JComboBox<>(days);
+        dateMonth = new JComboBox<>(months);
+        dateYear = new JComboBox<>(years);
+        panelDate.add(dateDay);
+        panelDate.add(dateMonth);
+        panelDate.add(dateYear);
 
+        queryPanel3.add(panelDate);
         panel3.add(queryPanel3);
         panel3.add(buttonQuery3);
         panel3.setLayout(new GridLayout(2,1));

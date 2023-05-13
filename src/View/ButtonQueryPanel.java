@@ -5,6 +5,7 @@ import Controller.ApplicationController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class ButtonQueryPanel implements ActionListener {
 
@@ -21,7 +22,11 @@ public class ButtonQueryPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         main.removeAll();
-        queryPanel = new QueryPanel(controller);
+        try {
+            queryPanel = new QueryPanel(controller);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         main.revalidate();
         main.add(queryPanel);
     }

@@ -19,11 +19,10 @@ public class MainJFrame extends JFrame {
     private PasswordPanel passwordPanel;
 
     private JMenuBar menuBar;
-    private JMenu menuItem, menuSearch, menuApplication;
+    private JMenu menuItem, menuSearch;
 
     private JMenuItem addMenu, deleteMenu, updateMenu, displayMenu;
     private JMenuItem queryMenu, taskMenu;
-    private JMenuItem quitMenu;
 
     private JPanel main;
     private Footer footer;
@@ -87,7 +86,7 @@ public class MainJFrame extends JFrame {
 
         menuItem = new JMenu("Item");
         menuSearch = new JMenu("Search");
-        menuApplication = new JMenu("Application");
+
 
         addMenu = new JMenuItem("Add");
         deleteMenu = new JMenuItem("Delete");
@@ -95,7 +94,7 @@ public class MainJFrame extends JFrame {
         displayMenu = new JMenuItem("Display");
         queryMenu = new JMenuItem("Query");
         taskMenu = new JMenuItem("Task");
-        quitMenu = new JMenuItem("Quit");
+
 
         menuItem.add(addMenu);
         menuItem.add(deleteMenu);
@@ -103,11 +102,11 @@ public class MainJFrame extends JFrame {
         menuItem.add(displayMenu);
         menuSearch.add(queryMenu);
         menuSearch.add(taskMenu);
-        menuApplication.add(quitMenu);
+
 
         menuBar.add(menuItem);
         menuBar.add(menuSearch);
-        menuBar.add(menuApplication);
+
 
 
 
@@ -140,6 +139,10 @@ public class MainJFrame extends JFrame {
         //Query Button
         ButtonQueryPanel buttonQueryPanel = new ButtonQueryPanel(main, controller);
         queryMenu.addActionListener(buttonQueryPanel);
+
+        //Task Button
+        ButtonTaskPanel  buttonTaskPanel = new ButtonTaskPanel(controller);
+        taskMenu.addActionListener(buttonTaskPanel);
 
 
         //Refresh display

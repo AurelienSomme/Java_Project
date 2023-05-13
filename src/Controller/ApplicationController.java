@@ -1,7 +1,7 @@
 package Controller;
 
-import DataAccess.ItemDBAccess;
-import DataAccess.ItemDataAccess;
+import DataAccess.*;
+import Model.Brand;
 import Model.Item;
 
 import java.sql.SQLException;
@@ -10,33 +10,49 @@ import java.util.Map;
 
 public class ApplicationController {
 
-    private ItemDataAccess dao;
+    private ItemDataAccess itemDao;
+    private BrandDataAccess brandDao;
+    private AffairDataAccess affairDao;
 
     public ApplicationController() throws SQLException {
-        setDao(new ItemDBAccess());
+        setItemDao(new ItemDBAccess());
+        setBrandDao(new BrandDBAccess());
+        setAffairDao(new AffairDBAccess());
     }
 
-    public void setDao(ItemDataAccess dao){
-        this.dao = dao;
+    public void setItemDao(ItemDataAccess dao){
+        this.itemDao = dao;
     }
+
+    public void setBrandDao(BrandDataAccess dao){ this.brandDao = dao;}
+
+    public void setAffairDao(AffairDataAccess dao){ this.affairDao = dao;}
 
 
     public Item getItem(String code) throws SQLException {
-        return dao.getItem(code);
+        return itemDao.getItem(code);
     }
 
     public ArrayList<Item> getAllItems() throws SQLException {
-        return dao.getAllItems();
+        return itemDao.getAllItems();
     }
 
     public boolean addItem(Item item) throws SQLException {
-        return dao.addItem(item);
+        return itemDao.addItem(item);
     }
 
     public boolean deleteItem(String code) throws SQLException {
-        return dao.deleteItem(code);
+        return itemDao.deleteItem(code);
     }
     public Boolean updateItem(int code, Map<String, Object> updateValues) throws SQLException {
-        return dao.updateItem(code, updateValues);
+        return itemDao.updateItem(code, updateValues);
+    }
+
+    public ArrayList<Integer> getAllIdsBrands() throws SQLException {
+        return brandDao.getAllIdsBrands();
+    }
+
+    public ArrayList<Integer> getAllIdsAffairs() throws SQLException {
+        return affairDao.getAllIdsAffairs();
     }
 }
