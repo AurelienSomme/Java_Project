@@ -8,6 +8,6 @@ public class AddCodeException extends Exception{
     }
 
     public String getMessage(){
-        return "Code must be an integer and unique (refused : " + codeError + " )";
+        return "Code must be unique (refused : " + codeError + " )";
     }
 }

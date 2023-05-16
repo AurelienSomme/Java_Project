@@ -16,5 +16,5 @@ public interface  ItemDataAccess { //throws AddItemException
 
     boolean deleteItem(String code) throws SQLException;
 
-    Boolean updateItem(int code, Map<String, Object> updateValues) throws SQLException;
+    Boolean updateItem(String code, Map<String, Object> updateValues) throws SQLException;
 }

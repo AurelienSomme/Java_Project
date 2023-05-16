@@ -22,7 +22,7 @@ public class ItemDBAccess implements ItemDataAccess{
     public Item getItem(String code) throws SQLException {
         String getItemInstruction = "select * from item where code = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(getItemInstruction);
-        preparedStatement.setInt(1, Integer.parseInt(code));
+        preparedStatement.setString(1, code);
         ResultSet data = preparedStatement.executeQuery();
         Item item = null;
         while (data.next()) {
@@ -35,7 +35,6 @@ public class ItemDBAccess implements ItemDataAccess{
                     data.getBigDecimal("VAT"), data.getBigDecimal("stock_quantity"),
                     data.getBigDecimal("threshold_limit"), data.getBoolean("automatic_order"),
                     gregSaleDate);
-
             if (data.getDate("production_date") != null) {
                 gregProdDate.setTime(data.getDate("production_date"));
                 item.setProductionDate(gregProdDate);
@@ -102,7 +101,7 @@ public class ItemDBAccess implements ItemDataAccess{
 
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
 
-            preparedStatement.setInt(1, Integer.parseInt(item.getCode()));
+            preparedStatement.setString(1, item.getCode());
             preparedStatement.setInt(2, item.getRefBrand());
             preparedStatement.setString(3, item.getName());
             preparedStatement.setBigDecimal(4, item.getCatalogPrice());
@@ -144,7 +143,7 @@ public class ItemDBAccess implements ItemDataAccess{
 
 
     @Override
-    public Boolean updateItem(int code, Map<String, Object> updateValues) throws SQLException {
+    public Boolean updateItem(String code, Map<String, Object> updateValues) throws SQLException {
         String updateInstructionHead = "UPDATE item SET ";
         String updateInstructionBody = "";
         String updateInstructionWhere = "WHERE code = ?";
@@ -164,7 +163,7 @@ public class ItemDBAccess implements ItemDataAccess{
             preparedStatement.setObject(i, value);
             i++;
         }
-        preparedStatement.setInt(i, code);
+        preparedStatement.setString(i, code);
         int nbUpdatedLines = preparedStatement.executeUpdate();
         return (nbUpdatedLines != 0);
     }
