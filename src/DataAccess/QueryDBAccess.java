@@ -201,7 +201,7 @@ public class QueryDBAccess implements QueryDataAccess{
             preparedStatementUpdate.setDate(1, new java.sql.Date(endDate.getTimeInMillis()));
             preparedStatementUpdate.setInt(2, codePromo);
             preparedStatementUpdate.setString(3, code);
-            System.out.println(preparedStatementUpdate);
+
             int nbUpdatedLines = preparedStatementUpdate.executeUpdate();
             return nbUpdatedLines > 0;
         }

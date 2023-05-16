@@ -152,5 +152,4 @@ public class MainJFrame extends JFrame {
     public void setController(ApplicationController controller){
         this.controller = controller;
     }
-
 }
