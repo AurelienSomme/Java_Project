@@ -9,12 +9,10 @@ import java.util.ArrayList;
 
 public class BrandDBAccess implements BrandDataAccess{
 
-    private SingletonConnection singletonConnexion;
     private Connection connection;
 
     public BrandDBAccess(){
-        singletonConnexion = SingletonConnection.getInstance();
-        connection = singletonConnexion.getConnection();
+        connection = SingletonConnection.getInstance();
     }
 
     @Override

@@ -8,12 +8,10 @@ import java.util.ArrayList;
 
 public class AffairDBAccess implements AffairDataAccess{
 
-    private SingletonConnection singletonConnexion;
     private Connection connection;
 
     public AffairDBAccess(){
-        singletonConnexion = SingletonConnection.getInstance();
-        connection = singletonConnexion.getConnection();
+        connection = SingletonConnection.getInstance();
     }
 
     @Override

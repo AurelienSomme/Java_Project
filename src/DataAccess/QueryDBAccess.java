@@ -12,12 +12,10 @@ import java.util.GregorianCalendar;
 
 public class QueryDBAccess implements QueryDataAccess{
 
-    private SingletonConnection singletonConnexion;
     private Connection connection;
 
     public QueryDBAccess(){
-        singletonConnexion = SingletonConnection.getInstance();
-        connection = singletonConnexion.getConnection();
+        connection = SingletonConnection.getInstance();
     }
 
     public ArrayList<PromoItemBrand> getPromosItemBrand(int refBrand) throws SQLException {

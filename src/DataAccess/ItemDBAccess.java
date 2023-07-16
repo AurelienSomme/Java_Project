@@ -10,12 +10,10 @@ import java.util.Map;
 
 public class ItemDBAccess implements ItemDataAccess{
 
-    private SingletonConnection singletonConnexion;
     private Connection connection;
 
     public ItemDBAccess() throws SQLException {
-        singletonConnexion = SingletonConnection.getInstance();
-        connection = singletonConnexion.getConnection();
+        connection = SingletonConnection.getInstance();
     }
 
 

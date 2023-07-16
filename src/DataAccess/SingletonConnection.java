@@ -6,42 +6,28 @@ import java.sql.SQLException;
 
 public class SingletonConnection {
 
-    private static SingletonConnection UniqueInstance;
-    private static Connection connection;
+    private static Connection connectionUnique;
 
-
-    private SingletonConnection(){
-
-    }
 
     public static Boolean getInstance(String password) throws SQLException {
-        if (UniqueInstance == null) {
+        if (connectionUnique == null) {
 
             try {
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/project java", "root", password);
+                connectionUnique = DriverManager.getConnection("jdbc:mysql://localhost:3306/project java", "root", password);
             }catch(Exception e){
 
             }
-            if(connection == null){
+            if(connectionUnique == null){
                 return false;
             }
-            UniqueInstance = new SingletonConnection();
         }
         return true;
     }
 
 
-    public static SingletonConnection getInstance() {
-        if (UniqueInstance == null) {
-            UniqueInstance = new SingletonConnection();
-        }
-        return UniqueInstance;
-    }
+    public static Connection getInstance() {
 
-
-
-    public static Connection getConnection(){
-        return connection;
+        return connectionUnique;
     }
 
 
