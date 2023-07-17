@@ -1,5 +1,6 @@
 package View.Main;
 
+import Business.ApplicationManager;
 import Controller.ApplicationController;
 
 import javax.imageio.ImageIO;
@@ -80,7 +81,7 @@ public class MainJFrame extends JFrame {
 
     public void setElementFrame() throws SQLException {
         container.removeAll();
-        controller.setDao();
+        controller.setApplicationManager(new ApplicationManager());
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 

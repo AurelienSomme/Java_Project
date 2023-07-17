@@ -1,5 +1,6 @@
 package Controller;
 
+import Business.ApplicationManager;
 import DataAccess.*;
 import Model.*;
 
@@ -11,82 +12,72 @@ import java.util.Map;
 
 public class ApplicationController {
 
-    private ItemDataAccess itemDao;
-    private BrandDataAccess brandDao;
-    private AffairDataAccess affairDao;
-    private QueryDataAccess queryDao;
+    private ApplicationManager applicationManager;
+
+
 
     public ApplicationController() throws SQLException {
 
     }
 
-    public void setDao() throws SQLException {
-        setItemDao(new ItemDBAccess());
-        setBrandDao(new BrandDBAccess());
-        setAffairDao(new AffairDBAccess());
-        setQueryDao(new QueryDBAccess());
+
+
+    public void setApplicationManager(ApplicationManager applicationManager){
+        this.applicationManager = applicationManager;
     }
 
-    public void setItemDao(ItemDataAccess dao){
-        this.itemDao = dao;
-    }
 
-    public void setBrandDao(BrandDataAccess dao){ this.brandDao = dao;}
-
-    public void setAffairDao(AffairDataAccess dao){ this.affairDao = dao;}
-
-    public void setQueryDao(QueryDataAccess dao){ this.queryDao = dao;}
 
 
     public Item getItem(String code) throws SQLException {
-        return itemDao.getItem(code);
+        return applicationManager.getItem(code);
     }
 
     public ArrayList<Item> getAllItems() throws SQLException {
-        return itemDao.getAllItems();
+        return applicationManager.getAllItems();
     }
 
     public boolean addItem(Item item) throws SQLException {
-        return itemDao.addItem(item);
+        return applicationManager.addItem(item);
     }
 
     public boolean deleteItem(String code) throws SQLException {
-        return itemDao.deleteItem(code);
+        return applicationManager.deleteItem(code);
     }
     public Boolean updateItem(String code, Map<String, Object> updateValues) throws SQLException {
-        return itemDao.updateItem(code, updateValues);
+        return applicationManager.updateItem(code, updateValues);
     }
 
     public ArrayList<Integer> getAllIdsBrands() throws SQLException {
-        return brandDao.getAllIdsBrands();
+        return applicationManager.getAllIdsBrands();
     }
 
     public ArrayList<Integer> getAllIdsAffairs() throws SQLException {
-        return affairDao.getAllIdsAffairs();
+        return applicationManager.getAllIdsAffairs();
     }
 
     public ArrayList<PromoItemBrand> getPromosItemBrand(int refBrand) throws SQLException {
-        return queryDao.getPromosItemBrand(refBrand);
+        return applicationManager.getPromosItemBrand(refBrand);
     }
 
     public ArrayList<AffairDetail> getAffairDetails(int idAffair) throws SQLException{
-        return queryDao.getAffairDetails(idAffair);
+        return applicationManager.getAffairDetails(idAffair);
     }
 
     public ArrayList<ExpiredBatch> getExpiredBatches(GregorianCalendar date) throws SQLException{
-        return queryDao.getExpiredBatches(date);
+        return applicationManager.getExpiredBatches(date);
     }
 
     public ArrayList<LeastSoldItem> getLeastSoldItems(int nbItems, int nbMonths) throws SQLException{
-        return queryDao.getLeastSoldItems(nbItems, nbMonths);
+        return applicationManager.getLeastSoldItems(nbItems, nbMonths);
     }
 
     public ArrayList<PromoHistory> getPromoHistories(String code) throws SQLException{
-        return queryDao.getPromoHistories(code);
+        return applicationManager.getPromoHistories(code);
     }
 
     public boolean updatePromo(BigDecimal percentRate, GregorianCalendar endDate, String code) throws SQLException{
-        return queryDao.updatePromo(percentRate, endDate, code);
+        return applicationManager.updatePromo(percentRate, endDate, code);
     }
 
     public boolean tryConnectionDB(String password) throws SQLException {
