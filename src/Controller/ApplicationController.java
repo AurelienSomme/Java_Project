@@ -33,7 +33,7 @@ public class ApplicationController {
         return applicationManager.getItem(code);
     }
 
-    public ArrayList<Item> getAllItems() throws SQLException {
+    public Object[][] getAllItems() throws SQLException {
         return applicationManager.getAllItems();
     }
 

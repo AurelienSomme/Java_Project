@@ -16,6 +16,8 @@ public class ApplicationManager {
     private AffairDataAccess affairDao;
     private QueryDataAccess queryDao;
 
+    private String[] nameColumn = {"Code", "Ref brand", "Name", "Catalog price", "Packaging", "VAT","Stock quantity", "Threshold", "Automatic order", "On-sale date", "Reduction points", "Production date"};
+
     public ApplicationManager() throws SQLException {
         setDao();
     }
@@ -26,6 +28,8 @@ public class ApplicationManager {
         setAffairDao(new AffairDBAccess());
         setQueryDao(new QueryDBAccess());
     }
+
+    //Setter
 
     public void setItemDao(ItemDataAccess dao){
         this.itemDao = dao;
@@ -38,59 +42,117 @@ public class ApplicationManager {
     public void setQueryDao(QueryDataAccess dao){ this.queryDao = dao;}
 
 
+
+    //Item
+
     public Item getItem(String code) throws SQLException {
-        return itemDao.getItem(code);
+        Item item = itemDao.getItem(code);
+
+        return item;
     }
 
-    public ArrayList<Item> getAllItems() throws SQLException {
-        return itemDao.getAllItems();
+    public Object[][] getAllItems() throws SQLException {
+        ArrayList<Item> items = itemDao.getAllItems();
+
+        Object[][] itemsObjectTab;
+
+        itemsObjectTab = new Object[items.size()][nameColumn.length];
+
+        for(int i = 0; i < items.size(); i++){
+
+            itemsObjectTab[i][0] = items.get(i).getCode();
+            itemsObjectTab[i][1] = items.get(i).getRefBrand();
+            itemsObjectTab[i][2] = items.get(i).getName();
+            itemsObjectTab[i][3] = items.get(i).getCatalogPrice();
+            itemsObjectTab[i][4] = items.get(i).getPackaging();
+            itemsObjectTab[i][5] = items.get(i).getVAT();
+            itemsObjectTab[i][6] = items.get(i).getStockQuantity();
+            itemsObjectTab[i][7] = items.get(i).getThresholdLimit();
+            itemsObjectTab[i][8] = items.get(i).getAutomaticOrder();
+            itemsObjectTab[i][9] = items.get(i).getSaleDate().getTime().toGMTString();;
+            if(items.get(i).getReductionPoints() != null)
+                itemsObjectTab[i][10] = items.get(i).getReductionPoints();
+            if(items.get(i).getProductionDate() != null)
+                itemsObjectTab[i][11] = items.get(i).getProductionDate().getTime().toGMTString();
+        }
+
+        return itemsObjectTab;
     }
 
     public boolean addItem(Item item) throws SQLException {
-        return itemDao.addItem(item);
+        boolean isAdded = itemDao.addItem(item);
+
+        return isAdded;
     }
 
     public boolean deleteItem(String code) throws SQLException {
-        return itemDao.deleteItem(code);
+        boolean isDeleted = itemDao.deleteItem(code);
+
+        return isDeleted;
     }
     public Boolean updateItem(String code, Map<String, Object> updateValues) throws SQLException {
-        return itemDao.updateItem(code, updateValues);
+        boolean isUpdated = itemDao.updateItem(code, updateValues);
+
+        return isUpdated;
     }
 
 
+
+    //Brand
 
     public ArrayList<Integer> getAllIdsBrands() throws SQLException {
-        return brandDao.getAllIdsBrands();
+        ArrayList<Integer> idsBrands = brandDao.getAllIdsBrands();
+
+        return idsBrands;
     }
 
 
+
+    //Affair
 
     public ArrayList<Integer> getAllIdsAffairs() throws SQLException {
-        return affairDao.getAllIdsAffairs();
+        ArrayList<Integer> idsAffairs = affairDao.getAllIdsAffairs();
+
+        return idsAffairs;
     }
 
 
+
+    //Query
+
     public ArrayList<PromoItemBrand> getPromosItemBrand(int refBrand) throws SQLException {
-        return queryDao.getPromosItemBrand(refBrand);
+        ArrayList<PromoItemBrand> promosItemBrand = queryDao.getPromosItemBrand(refBrand);
+
+        return promosItemBrand;
     }
 
     public ArrayList<AffairDetail> getAffairDetails(int idAffair) throws SQLException{
-        return queryDao.getAffairDetails(idAffair);
+        ArrayList<AffairDetail> affairDetails = queryDao.getAffairDetails(idAffair);
+
+        return affairDetails;
     }
 
     public ArrayList<ExpiredBatch> getExpiredBatches(GregorianCalendar date) throws SQLException{
-        return queryDao.getExpiredBatches(date);
+        ArrayList<ExpiredBatch> expiredBatches = queryDao.getExpiredBatches(date);
+
+        return expiredBatches;
     }
 
     public ArrayList<LeastSoldItem> getLeastSoldItems(int nbItems, int nbMonths) throws SQLException{
-        return queryDao.getLeastSoldItems(nbItems, nbMonths);
+        ArrayList<LeastSoldItem> leastSoldItems = queryDao.getLeastSoldItems(nbItems, nbMonths);
+
+        return leastSoldItems;
     }
 
     public ArrayList<PromoHistory> getPromoHistories(String code) throws SQLException{
-        return queryDao.getPromoHistories(code);
+        ArrayList<PromoHistory> promoHistories = queryDao.getPromoHistories(code);
+
+        return promoHistories;
     }
 
     public boolean updatePromo(BigDecimal percentRate, GregorianCalendar endDate, String code) throws SQLException{
-        return queryDao.updatePromo(percentRate, endDate, code);
+        boolean isUpdated = queryDao.updatePromo(percentRate, endDate, code);
+
+        return isUpdated;
     }
 }
