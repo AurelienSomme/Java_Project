@@ -10,27 +10,17 @@ import java.util.ArrayList;
 public class DisplayPromosPanel extends JPanel {
     private ApplicationController controller;
     private JTable promosItemsBrandTab;
-    private ArrayList<PromoItemBrand> promosItemsBrand;
-    private Object[][] promosItemsBrandObjectTab;
+    private Object[][] promosItemsBrand;
     private JPanel head, main;
 
     private String[] nameColumn = {"Name", "Catalog Price", "Percent Rate", "Start Date", "End Date"};
 
-    public DisplayPromosPanel(ApplicationController controller, ArrayList<PromoItemBrand> promosItemsBrand){
+    public DisplayPromosPanel(ApplicationController controller, Object[][] promosItemsBrand){
         this.controller = controller;
         this.promosItemsBrand = promosItemsBrand;
 
-        promosItemsBrandObjectTab = new Object[promosItemsBrand.size()][nameColumn.length];
 
-        for(int i = 0; i < promosItemsBrand.size(); i++) {
-            promosItemsBrandObjectTab[i][0] = promosItemsBrand.get(i).getName();
-            promosItemsBrandObjectTab[i][1] = promosItemsBrand.get(i).getCatalogPrice();
-            promosItemsBrandObjectTab[i][2] = promosItemsBrand.get(i).getPercent_rate();
-            promosItemsBrandObjectTab[i][3] = promosItemsBrand.get(i).getStart_date().getTime().toString();
-            promosItemsBrandObjectTab[i][4] = promosItemsBrand.get(i).getEnd_date().getTime().toString();
-        }
-
-        promosItemsBrandTab = new JTable(promosItemsBrandObjectTab, nameColumn);
+        promosItemsBrandTab = new JTable(promosItemsBrand, nameColumn);
         promosItemsBrandTab.getColumnModel().getColumn(0).setPreferredWidth(130);
         promosItemsBrandTab.getColumnModel().getColumn(1).setPreferredWidth(130);
         promosItemsBrandTab.getColumnModel().getColumn(2).setPreferredWidth(130);

@@ -11,26 +11,17 @@ import java.util.ArrayList;
 public class DisplayAffairDetailsPanel extends JPanel{
     private ApplicationController controller;
     private JTable affairDetailsTab;
-    private ArrayList<AffairDetail> affairDetails;
-    private Object[][] affairDetailsObjectTab;
+    private Object[][] affairDetails;
     private JPanel head, main;
 
     private String[] nameColumn = {"Brand Name", "Item Name", "Quantity", "Price"};
 
-    public DisplayAffairDetailsPanel(ApplicationController controller, ArrayList<AffairDetail> affairDetails) {
+    public DisplayAffairDetailsPanel(ApplicationController controller, Object[][] affairDetails) {
         this.controller = controller;
         this.affairDetails = affairDetails;
 
-        affairDetailsObjectTab = new Object[affairDetails.size()][nameColumn.length];
 
-        for (int i = 0; i < affairDetails.size(); i++) {
-            affairDetailsObjectTab[i][0] = affairDetails.get(i).getBrandName();
-            affairDetailsObjectTab[i][1] = affairDetails.get(i).getItemName();
-            affairDetailsObjectTab[i][2] = affairDetails.get(i).getQuantity();
-            affairDetailsObjectTab[i][3] = affairDetails.get(i).getPrice();
-        }
-
-        affairDetailsTab = new JTable(affairDetailsObjectTab, nameColumn);
+        affairDetailsTab = new JTable(affairDetails, nameColumn);
         affairDetailsTab.getColumnModel().getColumn(0).setPreferredWidth(130);
         affairDetailsTab.getColumnModel().getColumn(1).setPreferredWidth(130);
         affairDetailsTab.getColumnModel().getColumn(2).setPreferredWidth(130);

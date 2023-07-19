@@ -32,7 +32,7 @@ public class ButtonExpiredBatches implements ActionListener {
         date = new GregorianCalendar(Integer.parseInt((String)dateYear.getSelectedItem()),
                                         Integer.parseInt((String)dateMonth.getSelectedItem()),
                                         Integer.parseInt((String)dateDay.getSelectedItem()));
-        ArrayList<ExpiredBatch> expiredBatches;
+        Object[][] expiredBatches;
         try {
             expiredBatches = controller.getExpiredBatches(date);
 

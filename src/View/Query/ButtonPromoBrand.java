@@ -25,7 +25,7 @@ public class ButtonPromoBrand implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (refBrandComboBox.getItemCount() != 0){
-            ArrayList<PromoItemBrand> promosItemBrand;
+            Object[][] promosItemBrand;
             Integer selectedRefBrand = (Integer) refBrandComboBox.getSelectedItem();
             refBrand = selectedRefBrand.intValue();
             try {

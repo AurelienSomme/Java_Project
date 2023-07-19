@@ -56,15 +56,15 @@ public class ApplicationController {
         return applicationManager.getAllIdsAffairs();
     }
 
-    public ArrayList<PromoItemBrand> getPromosItemBrand(int refBrand) throws SQLException {
+    public Object[][] getPromosItemBrand(int refBrand) throws SQLException {
         return applicationManager.getPromosItemBrand(refBrand);
     }
 
-    public ArrayList<AffairDetail> getAffairDetails(int idAffair) throws SQLException{
+    public Object[][] getAffairDetails(int idAffair) throws SQLException{
         return applicationManager.getAffairDetails(idAffair);
     }
 
-    public ArrayList<ExpiredBatch> getExpiredBatches(GregorianCalendar date) throws SQLException{
+    public Object[][] getExpiredBatches(GregorianCalendar date) throws SQLException{
         return applicationManager.getExpiredBatches(date);
     }
 

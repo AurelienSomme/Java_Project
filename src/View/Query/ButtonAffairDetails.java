@@ -25,7 +25,7 @@ public class ButtonAffairDetails implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (refAffairComboBox.getItemCount() != 0){
-            ArrayList<AffairDetail> affairDetails;
+            Object[][] affairDetails;
             Integer selectedIdAffair = (Integer) refAffairComboBox.getSelectedItem();
             idAffair = selectedIdAffair.intValue();
             try {

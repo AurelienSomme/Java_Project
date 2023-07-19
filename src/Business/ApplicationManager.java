@@ -16,7 +16,10 @@ public class ApplicationManager {
     private AffairDataAccess affairDao;
     private QueryDataAccess queryDao;
 
-    private String[] nameColumn = {"Code", "Ref brand", "Name", "Catalog price", "Packaging", "VAT","Stock quantity", "Threshold", "Automatic order", "On-sale date", "Reduction points", "Production date"};
+    private String[] nameColumnItem = {"Code", "Ref brand", "Name", "Catalog price", "Packaging", "VAT","Stock quantity", "Threshold", "Automatic order", "On-sale date", "Reduction points", "Production date"};
+    private String[] nameColumnPromo = {"Name", "Catalog Price", "Percent Rate", "Start Date", "End Date"};
+    private String[] nameColumnExpiredBatches = {"Name Item", "Code", "Quantity", "Date", "Delivery Date", "Name Actor"};
+    private String[] nameColumnAffair = {"Brand Name", "Item Name", "Quantity", "Price"};
 
     public ApplicationManager() throws SQLException {
         setDao();
@@ -56,7 +59,7 @@ public class ApplicationManager {
 
         Object[][] itemsObjectTab;
 
-        itemsObjectTab = new Object[items.size()][nameColumn.length];
+        itemsObjectTab = new Object[items.size()][nameColumnItem.length];
 
         for(int i = 0; i < items.size(); i++){
 
@@ -120,23 +123,57 @@ public class ApplicationManager {
 
     //Query
 
-    public ArrayList<PromoItemBrand> getPromosItemBrand(int refBrand) throws SQLException {
+    public Object[][] getPromosItemBrand(int refBrand) throws SQLException {
         ArrayList<PromoItemBrand> promosItemBrand = queryDao.getPromosItemBrand(refBrand);
 
-        return promosItemBrand;
+        Object[][] promosItemsBrandObjectTab = new Object[promosItemBrand.size()][nameColumnPromo.length];
+
+        for(int i = 0; i < promosItemBrand.size(); i++) {
+            promosItemsBrandObjectTab[i][0] = promosItemBrand.get(i).getName();
+            promosItemsBrandObjectTab[i][1] = promosItemBrand.get(i).getCatalogPrice();
+            promosItemsBrandObjectTab[i][2] = promosItemBrand.get(i).getPercent_rate();
+            promosItemsBrandObjectTab[i][3] = promosItemBrand.get(i).getStart_date().getTime().toString();
+            promosItemsBrandObjectTab[i][4] = promosItemBrand.get(i).getEnd_date().getTime().toString();
+        }
+
+        return promosItemsBrandObjectTab;
     }
 
-    public ArrayList<AffairDetail> getAffairDetails(int idAffair) throws SQLException{
+    public Object[][] getAffairDetails(int idAffair) throws SQLException{
         ArrayList<AffairDetail> affairDetails = queryDao.getAffairDetails(idAffair);
 
-        return affairDetails;
+        Object[][] affairDetailsObjectTab = new Object[affairDetails.size()][nameColumnAffair.length];
+
+        for (int i = 0; i < affairDetails.size(); i++) {
+            affairDetailsObjectTab[i][0] = affairDetails.get(i).getBrandName();
+            affairDetailsObjectTab[i][1] = affairDetails.get(i).getItemName();
+            affairDetailsObjectTab[i][2] = affairDetails.get(i).getQuantity();
+            affairDetailsObjectTab[i][3] = affairDetails.get(i).getPrice();
+        }
+
+        return affairDetailsObjectTab;
     }
 
-    public ArrayList<ExpiredBatch> getExpiredBatches(GregorianCalendar date) throws SQLException{
+    public Object[][] getExpiredBatches(GregorianCalendar date) throws SQLException{
         ArrayList<ExpiredBatch> expiredBatches = queryDao.getExpiredBatches(date);
 
-        return expiredBatches;
+        Object[][] expiredBatchesObjectTab = new Object[expiredBatches.size()][nameColumnExpiredBatches.length];
+
+        for(int i = 0; i < expiredBatches.size(); i++) {
+            expiredBatchesObjectTab[i][0] = expiredBatches.get(i).getItemName();
+            expiredBatchesObjectTab[i][1] = expiredBatches.get(i).getCode();
+            expiredBatchesObjectTab[i][2] = expiredBatches.get(i).getQuantity();
+            expiredBatchesObjectTab[i][3] = expiredBatches.get(i).getDate().getTime().toString();
+            expiredBatchesObjectTab[i][4] = expiredBatches.get(i).getDeliveryDate().getTime().toString();
+            expiredBatchesObjectTab[i][5] = expiredBatches.get(i).getActorName();
+        }
+
+        return expiredBatchesObjectTab;
     }
+
+    
+
+    //Task
 
     public ArrayList<LeastSoldItem> getLeastSoldItems(int nbItems, int nbMonths) throws SQLException{
         ArrayList<LeastSoldItem> leastSoldItems = queryDao.getLeastSoldItems(nbItems, nbMonths);
