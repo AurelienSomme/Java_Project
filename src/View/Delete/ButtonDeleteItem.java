@@ -41,9 +41,9 @@ public class ButtonDeleteItem implements ActionListener {
     }
 
     public void setCode() throws AddCodeException {
-        if(codeText.getText().matches("[0-9]+"))
+        if(!codeText.getText().isBlank()) {
             code = codeText.getText();
-        else
+        }else
             throw new AddCodeException(codeText.getText());
     }
 }
