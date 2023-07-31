@@ -16,7 +16,7 @@ public class QueryPanel extends JPanel {
 
     //Query 1 Form
     private JLabel nameBrand;
-    private JComboBox<Integer> refBrandComboBox;
+    private JComboBox<String> refBrandComboBox;
 
     //Query 2 Form
     private JLabel nameAffair;
@@ -41,10 +41,10 @@ public class QueryPanel extends JPanel {
         queryPanel1.setLayout(new GridLayout(1, 2));
         nameBrand = new JLabel("Brand Id");
         queryPanel1.add(nameBrand);
-        ArrayList<Integer> idsBrands;
+        ArrayList<String> idsBrands;
         idsBrands = controller.getAllIdsBrands();
         refBrandComboBox = new JComboBox<>();
-        DefaultComboBoxModel<Integer> modelBrands = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<String> modelBrands = new DefaultComboBoxModel<>();
         modelBrands.addAll(idsBrands);
         refBrandComboBox.setModel(modelBrands);
         if(idsBrands.size() != 0)

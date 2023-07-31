@@ -103,8 +103,8 @@ public class ApplicationManager {
 
     //Brand
 
-    public ArrayList<Integer> getAllIdsBrands() throws SQLException {
-        ArrayList<Integer> idsBrands = brandDao.getAllIdsBrands();
+    public ArrayList<String> getAllIdsBrands() throws SQLException {
+        ArrayList<String> idsBrands = brandDao.getAllIdsBrands();
 
         return idsBrands;
     }

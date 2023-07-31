@@ -5,5 +5,5 @@ import java.util.ArrayList;
 
 public interface BrandDataAccess {
 
-    ArrayList<Integer> getAllIdsBrands() throws SQLException;
+    ArrayList<String> getAllIdsBrands() throws SQLException;
 }

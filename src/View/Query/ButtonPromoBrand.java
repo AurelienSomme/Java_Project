@@ -13,10 +13,10 @@ public class ButtonPromoBrand implements ActionListener {
 
     private QueryPanel main;
     private ApplicationController controller;
-    private JComboBox<Integer> refBrandComboBox;
+    private JComboBox<String> refBrandComboBox;
     private int refBrand;
 
-    public ButtonPromoBrand(QueryPanel main, ApplicationController controller, JComboBox<Integer> refBrandComboBox){
+    public ButtonPromoBrand(QueryPanel main, ApplicationController controller, JComboBox<String> refBrandComboBox){
         this.main = main;
         this.controller = controller;
         this.refBrandComboBox = refBrandComboBox;
@@ -26,8 +26,10 @@ public class ButtonPromoBrand implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (refBrandComboBox.getItemCount() != 0){
             Object[][] promosItemBrand;
-            Integer selectedRefBrand = (Integer) refBrandComboBox.getSelectedItem();
-            refBrand = selectedRefBrand.intValue();
+            String selectedBrand = (String) refBrandComboBox.getSelectedItem();
+            String[] brandStr = selectedBrand.split(" - ", 2);
+            String refStr = brandStr[0].trim();
+            refBrand = Integer.parseInt(refStr);
             try {
                 promosItemBrand = controller.getPromosItemBrand(refBrand);
 

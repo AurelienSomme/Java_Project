@@ -48,7 +48,7 @@ public class ApplicationController {
         return applicationManager.updateItem(code, updateValues);
     }
 
-    public ArrayList<Integer> getAllIdsBrands() throws SQLException {
+    public ArrayList<String> getAllIdsBrands() throws SQLException {
         return applicationManager.getAllIdsBrands();
     }
 

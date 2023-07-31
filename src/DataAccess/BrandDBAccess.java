@@ -16,14 +16,14 @@ public class BrandDBAccess implements BrandDataAccess{
     }
 
     @Override
-    public ArrayList<Integer> getAllIdsBrands() throws SQLException {
-        ArrayList<Integer> idsBrands = new ArrayList<>();
-        String allIdsInstruction = "SELECT id_brand from brand;";
+    public ArrayList<String> getAllIdsBrands() throws SQLException {
+        ArrayList<String> idsBrands = new ArrayList<>();
+        String allIdsInstruction = "SELECT id_brand, name from brand;";
         PreparedStatement preparedStatement = connection.prepareStatement(allIdsInstruction);
         ResultSet data = preparedStatement.executeQuery();
 
         while (data.next()){
-            idsBrands.add(data.getInt("id_brand"));
+            idsBrands.add(data.getInt("id_brand") + " - " + data.getString("name"));
         }
 
         return idsBrands;
