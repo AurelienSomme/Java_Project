@@ -47,7 +47,6 @@ public class MovementThread extends Thread{
     public boolean borderReach(ImageShop image){
 
         int width = frame.getSize().width;
-
         if(image.getDirection() == 0){
             return image.getPositionX() >= width - 80;
         }
