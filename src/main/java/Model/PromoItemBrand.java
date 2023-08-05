@@ -1,19 +1,18 @@
 package Model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class PromoItemBrand {
 
     private String name;
     private BigDecimal catalogPrice;
     private BigDecimal percent_rate;
-    private GregorianCalendar start_date;
-    private GregorianCalendar end_date;
+    private LocalDate start_date;
+    private LocalDate end_date;
 
 
-    public PromoItemBrand(String name, BigDecimal catalogPrice, BigDecimal percent_rate, GregorianCalendar start_date, GregorianCalendar end_date){
+    public PromoItemBrand(String name, BigDecimal catalogPrice, BigDecimal percent_rate, LocalDate start_date, LocalDate end_date){
         this.name = name;
         this.catalogPrice = catalogPrice;
         this.percent_rate = percent_rate;
@@ -30,6 +29,6 @@ public class PromoItemBrand {
         return catalogPrice;
     }
     public BigDecimal getPercent_rate() { return percent_rate;}
-    public GregorianCalendar getStart_date() {return start_date;}
-    public GregorianCalendar getEnd_date(){ return end_date;}
+    public LocalDate getStart_date() {return start_date;}
+    public LocalDate getEnd_date(){ return end_date;}
 }

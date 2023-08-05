@@ -6,15 +6,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 
 public class PromosPanel extends JPanel {
     private JPanel head, main;
     private JLabel codeLabel, percentRateLabel, startDateLabel, endDateLabel;
-    private SimpleDateFormat formatter;
 
     public PromosPanel(ArrayList<PromoHistory> promoHistories){
-        formatter = new SimpleDateFormat("dd/MM/yyyy");
         main = new JPanel();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         codeLabel = new JLabel("Code");
         percentRateLabel = new JLabel("Percent Rate");
@@ -31,15 +31,16 @@ public class PromosPanel extends JPanel {
 
         main.setLayout(new GridLayout(promoHistories.size(), 6));
 
-        for(int i = 0; i < promoHistories.size(); i++){
+        for (int i = 0; i < promoHistories.size(); i++) {
             PromoHistory promoHistory = promoHistories.get(i);
             main.add(new JLabel(String.valueOf(promoHistory.getCode())));
             main.add(new JLabel(promoHistory.getPercentRate().toString()));
             main.add(new JLabel(""));
-            main.add(new JLabel(formatter.format(promoHistory.getStartDate().getTime())));
+            main.add(new JLabel(promoHistory.getStartDate().format(formatter)));
             main.add(new JLabel(""));
-            main.add(new JLabel(formatter.format(promoHistory.getEndDate().getTime())));
+            main.add(new JLabel(promoHistory.getEndDate().format(formatter)));
         }
+
         add(head);
         add(main);
     }

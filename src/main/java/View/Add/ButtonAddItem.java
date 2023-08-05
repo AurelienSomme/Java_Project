@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class ButtonAddItem implements ActionListener {
 
@@ -27,8 +27,8 @@ public class ButtonAddItem implements ActionListener {
     private BigDecimal stockQuantity;
     private BigDecimal thresholdLimit;
     private boolean automaticOrder;
-    private GregorianCalendar productionDate;
-    private GregorianCalendar saleDate;
+    private LocalDate productionDate;
+    private LocalDate saleDate;
     private JCheckBox optionalButtonProductionDate;
     private ApplicationController controller;
 
@@ -74,7 +74,11 @@ public class ButtonAddItem implements ActionListener {
             item = new Item(code, refBrand, name, catalogPrice, packaging, VAT, stockQuantity, thresholdLimit, automaticOrder, saleDate);
 
             if(optionalButtonProductionDate.isSelected()){
-                productionDate = new GregorianCalendar(Integer.parseInt((String) prodYear.getSelectedItem()), Integer.parseInt((String) prodMonth.getSelectedItem()), Integer.parseInt((String) prodDay.getSelectedItem()));
+                productionDate = LocalDate.of(
+                        Integer.parseInt((String) prodYear.getSelectedItem()),
+                        Integer.parseInt((String) prodMonth.getSelectedItem()),
+                        Integer.parseInt((String) prodDay.getSelectedItem())
+                );
                 item.setProductionDate(productionDate);
             }
 
@@ -168,7 +172,11 @@ public class ButtonAddItem implements ActionListener {
             throw new AddBigDecimalException(thresholdLimitText.getText(), "Treshold Limit");
 
         automaticOrder = yesAutomaticOrder.isSelected();
-        saleDate = new GregorianCalendar(Integer.parseInt((String)saleYear.getSelectedItem()), Integer.parseInt((String)saleMonth.getSelectedItem()), Integer.parseInt((String)saleDay.getSelectedItem()));
+        saleDate = LocalDate.of(
+                Integer.parseInt((String) saleYear.getSelectedItem()),
+                Integer.parseInt((String) saleMonth.getSelectedItem()),
+                Integer.parseInt((String) saleDay.getSelectedItem())
+        );
         return true;
     }
 }

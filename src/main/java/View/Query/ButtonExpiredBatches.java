@@ -9,14 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class ButtonExpiredBatches implements ActionListener {
 
     private QueryPanel main;
     private ApplicationController controller;
     private JComboBox<String> dateDay, dateMonth, dateYear;
-    private GregorianCalendar date;
+    private LocalDate date;
 
     public ButtonExpiredBatches(QueryPanel main, ApplicationController controller, JComboBox<String> dateDay,
                                 JComboBox<String> dateMonth, JComboBox<String> dateYear){
@@ -29,9 +29,12 @@ public class ButtonExpiredBatches implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        date = new GregorianCalendar(Integer.parseInt((String)dateYear.getSelectedItem()),
-                                        Integer.parseInt((String)dateMonth.getSelectedItem()),
-                                        Integer.parseInt((String)dateDay.getSelectedItem()));
+        date = LocalDate.of(
+                Integer.parseInt((String) dateYear.getSelectedItem()),
+                Integer.parseInt((String) dateMonth.getSelectedItem()),
+                Integer.parseInt((String) dateDay.getSelectedItem())
+        );
+
         Object[][] expiredBatches;
         try {
             expiredBatches = controller.getExpiredBatches(date);

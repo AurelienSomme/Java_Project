@@ -5,7 +5,7 @@ import Model.Item;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class ItemDBAccess implements ItemDataAccess{
@@ -24,18 +24,17 @@ public class ItemDBAccess implements ItemDataAccess{
         ResultSet data = preparedStatement.executeQuery();
         Item item = null;
         while (data.next()) {
-            GregorianCalendar gregProdDate = new GregorianCalendar();
-            GregorianCalendar gregSaleDate = new GregorianCalendar();
-            gregSaleDate.setTime(data.getDate("sale_date"));
+            LocalDate localProdDate = LocalDate.now(); // Date actuelle
+            LocalDate localSaleDate = data.getDate("sale_date").toLocalDate(); // Conversion en LocalDate
 
             item = new Item(data.getString("code"), data.getInt("ref_brand"), data.getString("name"),
                     data.getBigDecimal("catalog_price"), data.getString("packaging"),
                     data.getBigDecimal("VAT"), data.getBigDecimal("stock_quantity"),
                     data.getBigDecimal("threshold_limit"), data.getBoolean("automatic_order"),
-                    gregSaleDate);
+                    localSaleDate);
             if (data.getDate("production_date") != null) {
-                gregProdDate.setTime(data.getDate("production_date"));
-                item.setProductionDate(gregProdDate);
+                localProdDate = data.getDate("production_date").toLocalDate();
+                item.setProductionDate(localProdDate);
             }
             if (data.getBigDecimal("reduction_points") != null) {
                 item.setReductionPoints(data.getBigDecimal("reduction_points"));
@@ -57,19 +56,18 @@ public class ItemDBAccess implements ItemDataAccess{
 
         while (data.next()){
 
-            GregorianCalendar gregProdDate = new GregorianCalendar();
-            GregorianCalendar gregSaleDate = new GregorianCalendar();
-            gregSaleDate.setTime(data.getDate("sale_date"));
+            LocalDate localProdDate = LocalDate.now();
+            LocalDate localSaleDate = data.getDate("sale_date").toLocalDate();
 
             item = new Item(data.getString("code"),data.getInt("ref_brand"), data.getString("name"),
                     data.getBigDecimal("catalog_price"), data.getString("packaging"),
                     data.getBigDecimal("VAT"), data.getBigDecimal("stock_quantity"),
                     data.getBigDecimal("threshold_limit"), data.getBoolean("automatic_order"),
-                    gregSaleDate);
+                    localSaleDate);
 
             if(data.getDate("production_date") != null){
-                gregProdDate.setTime(data.getDate("production_date"));
-                item.setProductionDate(gregProdDate);
+                localProdDate = data.getDate("production_date").toLocalDate();
+                item.setProductionDate(localProdDate);
             }
             if(data.getBigDecimal("reduction_points") != null){
                 item.setReductionPoints(data.getBigDecimal("reduction_points"));
