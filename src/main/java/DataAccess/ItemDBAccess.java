@@ -110,11 +110,21 @@ public class ItemDBAccess implements ItemDataAccess{
             preparedStatement.setBigDecimal(8, item.getStockQuantity());
             preparedStatement.setBigDecimal(9, item.getThresholdLimit());
             preparedStatement.setBoolean(10, item.getAutomaticOrder());
-            if (item.getProductionDate() != null)
+            /*if (item.getProductionDate() != null)
                 preparedStatement.setDate(11, new java.sql.Date(item.getProductionDate().getTimeInMillis()));
             else
                 preparedStatement.setDate(11, null);
-            preparedStatement.setDate(12, new java.sql.Date(item.getSaleDate().getTimeInMillis()));
+            preparedStatement.setDate(12, new java.sql.Date(item.getSaleDate().getTimeInMillis()));*/
+            if (item.getProductionDate() != null) {
+                LocalDate productionDate = item.getProductionDate();
+                preparedStatement.setDate(11, java.sql.Date.valueOf(productionDate));
+            } else {
+                preparedStatement.setNull(11, Types.DATE);
+            }
+
+            LocalDate saleDate = item.getSaleDate();
+            preparedStatement.setDate(12, java.sql.Date.valueOf(saleDate));
+
 
             try {
                 preparedStatement.executeUpdate();

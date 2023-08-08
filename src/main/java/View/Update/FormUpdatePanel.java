@@ -57,10 +57,10 @@ public class FormUpdatePanel extends JPanel {
         thresholdLimit = new JLabel("Threshold Limit : " + item.getThresholdLimit());
 
         automaticOrder = new JLabel("Automatic Order : " + item.getAutomaticOrder());
-        saleDate = new JLabel("Sale Date : " + formatter.format(item.getSaleDate().getTime()));
+        saleDate = new JLabel("Sale Date : " + formatter.format(item.getSaleDate()));
         //Optional
         reductionPoint = new JLabel("Reduction Points : " + item.getReductionPoints());
-        productionDate = new JLabel("Prod Date : " + (item.getProductionDate() == null ? "null" : formatter.format(item.getProductionDate().getTime())));
+        productionDate = new JLabel("Prod Date : " + (item.getProductionDate() == null ? "null" : formatter.format(item.getProductionDate())));
 
         //Init items
 

@@ -72,11 +72,11 @@ public class ApplicationManager {
             itemsObjectTab[i][6] = items.get(i).getStockQuantity();
             itemsObjectTab[i][7] = items.get(i).getThresholdLimit();
             itemsObjectTab[i][8] = items.get(i).getAutomaticOrder();
-            itemsObjectTab[i][9] = items.get(i).getSaleDate().getTime().toGMTString();;
+            itemsObjectTab[i][9] = items.get(i).getSaleDate();
             if(items.get(i).getReductionPoints() != null)
                 itemsObjectTab[i][10] = items.get(i).getReductionPoints();
             if(items.get(i).getProductionDate() != null)
-                itemsObjectTab[i][11] = items.get(i).getProductionDate().getTime().toGMTString();
+                itemsObjectTab[i][11] = items.get(i).getProductionDate();
         }
 
         return itemsObjectTab;
