@@ -1,16 +1,16 @@
 package Model;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class ExpiredBatch {
     private String itemName;
     private String code;
     private int quantity;
-    private GregorianCalendar date;
-    private GregorianCalendar deliveryDate;
+    private LocalDate date;
+    private LocalDate deliveryDate;
     private String actorName;
 
-    public ExpiredBatch(String itemName, String code, int quantity, GregorianCalendar date, String actorName){
+    public ExpiredBatch(String itemName, String code, int quantity, LocalDate date, String actorName){
         this.itemName = itemName;
         this.code = code;
         this.quantity = quantity;
@@ -19,7 +19,7 @@ public class ExpiredBatch {
         this.actorName = actorName;
     }
 
-    public void setDeliveryDate(GregorianCalendar deliveryDate){
+    public void setDeliveryDate(LocalDate deliveryDate){
         this.deliveryDate =  deliveryDate;
     }
 
@@ -35,11 +35,11 @@ public class ExpiredBatch {
         return quantity;
     }
 
-    public GregorianCalendar getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public GregorianCalendar getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 

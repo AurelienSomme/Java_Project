@@ -1,7 +1,7 @@
 package Model;
 
 import java.math.BigDecimal;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class Item {
     private String code;
@@ -14,12 +14,12 @@ public class Item {
     private BigDecimal stockQuantity;
     private BigDecimal thresholdLimit;
     private boolean automaticOrder;
-    private GregorianCalendar productionDate;
-    private GregorianCalendar saleDate;
+    private LocalDate productionDate;
+    private LocalDate saleDate;
 
 
 
-    public Item(String code, int refBrand, String name, BigDecimal catalogPrice, String packaging, BigDecimal VAT, BigDecimal stockQuantity, BigDecimal thresholdLimit, boolean automaticOrder, GregorianCalendar saleDate){
+    public Item(String code, int refBrand, String name, BigDecimal catalogPrice, String packaging, BigDecimal VAT, BigDecimal stockQuantity, BigDecimal thresholdLimit, boolean automaticOrder, LocalDate saleDate){
         this.code = code;
         this.refBrand = refBrand;
         this.name = name;
@@ -63,10 +63,10 @@ public class Item {
     public boolean getAutomaticOrder(){
         return automaticOrder;
     }
-    public GregorianCalendar getSaleDate(){
+    public LocalDate getSaleDate(){
         return saleDate;
     }
-    public GregorianCalendar getProductionDate(){
+    public LocalDate getProductionDate(){
         return productionDate;
     }
     public BigDecimal getReductionPoints(){ return reductionPoints;}
@@ -75,7 +75,7 @@ public class Item {
         this.reductionPoints = reductionPoints;
     }
 
-    public void setProductionDate(GregorianCalendar productionDate){
+    public void setProductionDate(LocalDate productionDate){
         this.productionDate = productionDate;
     }
 

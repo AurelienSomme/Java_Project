@@ -1,12 +1,12 @@
 package Model;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class DateException extends Exception{
-    private GregorianCalendar wrongDate;
+    private LocalDate wrongDate;
     private String type;
 
-    public DateException(GregorianCalendar date, String type){
+    public DateException(LocalDate date, String type){
         wrongDate = date;
         this.type = type;
     }

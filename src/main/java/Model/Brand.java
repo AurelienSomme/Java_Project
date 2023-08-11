@@ -1,15 +1,15 @@
 package Model;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class Brand {
     private int idBrand;
     private String name;
     private String CEO;
-    private GregorianCalendar creationDate;
+    private LocalDate creationDate;
     private String description;
 
-    public Brand(int idBrand, String name, String CEO, GregorianCalendar creationDate){
+    public Brand(int idBrand, String name, String CEO, LocalDate creationDate){
         this.idBrand = idBrand;
         this.name = name;
         this.CEO = CEO;
@@ -30,7 +30,7 @@ public class Brand {
 
     public String getCEO(){return CEO;}
 
-    public GregorianCalendar getCreationDate(){return creationDate;}
+    public LocalDate getCreationDate(){return creationDate;}
 
     public String getDescription(){return description;}
 }

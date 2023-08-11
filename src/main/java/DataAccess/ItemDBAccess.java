@@ -4,6 +4,7 @@ import Model.Item;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Map;
@@ -24,23 +25,24 @@ public class ItemDBAccess implements ItemDataAccess{
         ResultSet data = preparedStatement.executeQuery();
         Item item = null;
         while (data.next()) {
-            GregorianCalendar gregProdDate = new GregorianCalendar();
-            GregorianCalendar gregSaleDate = new GregorianCalendar();
-            gregSaleDate.setTime(data.getDate("sale_date"));
+            LocalDate localProdDate = LocalDate.now(); // Date actuelle
+            LocalDate localSaleDate = data.getDate("sale_date").toLocalDate(); // Conversion en LocalDate
 
+            System.out.println("1");
             item = new Item(data.getString("code"), data.getInt("ref_brand"), data.getString("name"),
                     data.getBigDecimal("catalog_price"), data.getString("packaging"),
                     data.getBigDecimal("VAT"), data.getBigDecimal("stock_quantity"),
                     data.getBigDecimal("threshold_limit"), data.getBoolean("automatic_order"),
-                    gregSaleDate);
+                    localSaleDate);
             if (data.getDate("production_date") != null) {
-                gregProdDate.setTime(data.getDate("production_date"));
-                item.setProductionDate(gregProdDate);
+                localProdDate = data.getDate("production_date").toLocalDate();
+                item.setProductionDate(localProdDate);
             }
             if (data.getBigDecimal("reduction_points") != null) {
                 item.setReductionPoints(data.getBigDecimal("reduction_points"));
             }
         }
+        System.out.println("2");
         return item;
     }
 
@@ -57,19 +59,18 @@ public class ItemDBAccess implements ItemDataAccess{
 
         while (data.next()){
 
-            GregorianCalendar gregProdDate = new GregorianCalendar();
-            GregorianCalendar gregSaleDate = new GregorianCalendar();
-            gregSaleDate.setTime(data.getDate("sale_date"));
+            LocalDate localProdDate = LocalDate.now();
+            LocalDate localSaleDate = data.getDate("sale_date").toLocalDate();
 
             item = new Item(data.getString("code"),data.getInt("ref_brand"), data.getString("name"),
                     data.getBigDecimal("catalog_price"), data.getString("packaging"),
                     data.getBigDecimal("VAT"), data.getBigDecimal("stock_quantity"),
                     data.getBigDecimal("threshold_limit"), data.getBoolean("automatic_order"),
-                    gregSaleDate);
+                    localSaleDate);
 
             if(data.getDate("production_date") != null){
-                gregProdDate.setTime(data.getDate("production_date"));
-                item.setProductionDate(gregProdDate);
+                localProdDate = data.getDate("production_date").toLocalDate();
+                item.setProductionDate(localProdDate);
             }
             if(data.getBigDecimal("reduction_points") != null){
                 item.setReductionPoints(data.getBigDecimal("reduction_points"));
@@ -98,7 +99,7 @@ public class ItemDBAccess implements ItemDataAccess{
             String sqlInstruction = "INSERT INTO item VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-
+            System.out.println(item);
             preparedStatement.setString(1, item.getCode());
             preparedStatement.setInt(2, item.getRefBrand());
             preparedStatement.setString(3, item.getName());
@@ -112,11 +113,15 @@ public class ItemDBAccess implements ItemDataAccess{
             preparedStatement.setBigDecimal(8, item.getStockQuantity());
             preparedStatement.setBigDecimal(9, item.getThresholdLimit());
             preparedStatement.setBoolean(10, item.getAutomaticOrder());
-            if (item.getProductionDate() != null)
-                preparedStatement.setDate(11, new java.sql.Date(item.getProductionDate().getTimeInMillis()));
+            Date sqlDate1;
+            if (item.getProductionDate() != null) {
+                sqlDate1 = Date.valueOf(item.getProductionDate());
+                preparedStatement.setDate(11, sqlDate1);
+            }
             else
                 preparedStatement.setDate(11, null);
-            preparedStatement.setDate(12, new java.sql.Date(item.getSaleDate().getTimeInMillis()));
+            Date sqlDate2 = Date.valueOf(item.getSaleDate());
+            preparedStatement.setDate(12, sqlDate2);
 
             try {
                 preparedStatement.executeUpdate();

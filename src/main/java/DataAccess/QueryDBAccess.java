@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class QueryDBAccess implements QueryDataAccess{
 
@@ -34,10 +34,8 @@ public class QueryDBAccess implements QueryDataAccess{
 
         PromoItemBrand promoItemBrand;
         while (data.next()) {
-            GregorianCalendar startDate = new GregorianCalendar();
-            GregorianCalendar endDate = new GregorianCalendar();
-            startDate.setTime(data.getDate("start_date"));
-            endDate.setTime(data.getDate("end_date"));
+            LocalDate startDate = data.getDate("start_date").toLocalDate();
+            LocalDate endDate = data.getDate("end_date").toLocalDate();
             promoItemBrand = new PromoItemBrand(data.getString("name"), data.getBigDecimal("catalog_price")
                                                 , data.getBigDecimal("percent_rate"), startDate, endDate);
             promosItemBrand.add(promoItemBrand);
@@ -73,7 +71,7 @@ public class QueryDBAccess implements QueryDataAccess{
         return affairDetails;
     }
 
-    public ArrayList<ExpiredBatch> getExpiredBatches(GregorianCalendar date) throws SQLException{
+    public ArrayList<ExpiredBatch> getExpiredBatches(LocalDate date) throws SQLException{
         ArrayList<ExpiredBatch> expiredBatches = new ArrayList<>();
 
         String instructionQuery = "SELECT i.name, b.code, da.quantity, a.date_affair, a.delivery_date, ac.name\n" +
@@ -86,20 +84,20 @@ public class QueryDBAccess implements QueryDataAccess{
                 "ORDER BY a.date_affair DESC;";
 
         PreparedStatement preparedStatement = connection.prepareStatement(instructionQuery);
-        preparedStatement.setDate(1, new java.sql.Date(date.getTimeInMillis()));
+        preparedStatement.setDate(1, java.sql.Date.valueOf(date));
         ResultSet data = preparedStatement.executeQuery();
 
         ExpiredBatch expiredBatch;
         while (data.next()){
 
-            GregorianCalendar dateData = new GregorianCalendar();
-            GregorianCalendar deliveryDate = new GregorianCalendar();
-            dateData.setTime(data.getDate("a.date_affair"));
+
+            LocalDate dateData = data.getDate("date_affair").toLocalDate();
+            LocalDate deliveryDate = null;
 
             expiredBatch = new ExpiredBatch(data.getString("i.name"), data.getString("code"),
                     data.getInt("quantity"), dateData, data.getString("ac.name"));
             if(data.getDate("delivery_date") != null) {
-                deliveryDate.setTime(data.getDate("delivery_date"));
+                deliveryDate = data.getDate("delivery_date").toLocalDate();;
                 expiredBatch.setDeliveryDate(deliveryDate);
             }
 
@@ -163,10 +161,8 @@ public class QueryDBAccess implements QueryDataAccess{
 
         PromoHistory promoHistory;
         while (data.next()){
-            GregorianCalendar startDate = new GregorianCalendar();
-            GregorianCalendar endDate = new GregorianCalendar();
-            startDate.setTime(data.getDate("promotion_date.start_date"));
-            endDate.setTime(data.getDate("promotion_date.end_date"));
+            LocalDate startDate = data.getDate("promotion_date.start_date").toLocalDate();
+            LocalDate endDate = data.getDate("promotion_date.end_date").toLocalDate();
             promoHistory = new PromoHistory(data.getInt("promotion.code"), data.getBigDecimal("promotion.percent_rate"), startDate, endDate);
             promoHistories.add(promoHistory);
         }
@@ -174,7 +170,7 @@ public class QueryDBAccess implements QueryDataAccess{
         return promoHistories;
     }
 
-    public boolean updatePromo(BigDecimal percentRate, GregorianCalendar endDate, String code) throws SQLException {
+    public boolean updatePromo(BigDecimal percentRate, LocalDate  endDate, String code) throws SQLException {
 
         String instructionQuery = "UPDATE promotion_date\n" +
                 "SET end_date = CURRENT_DATE\n" +
@@ -200,7 +196,7 @@ public class QueryDBAccess implements QueryDataAccess{
                     "VALUES (CURRENT_DATE, ?, ?, ?)\n;";
 
             PreparedStatement preparedStatementUpdate = connection.prepareStatement(instructionQueryUpdate);
-            preparedStatementUpdate.setDate(1, new java.sql.Date(endDate.getTimeInMillis()));
+            preparedStatementUpdate.setDate(1, java.sql.Date.valueOf(endDate));
             preparedStatementUpdate.setInt(2, codePromo);
             preparedStatementUpdate.setString(3, code);
 
@@ -232,7 +228,7 @@ public class QueryDBAccess implements QueryDataAccess{
             preparedStatementPromo.execute();
 
             PreparedStatement preparedStatementPromoDate = connection.prepareStatement(instructionInsertPromoDate);
-            preparedStatementPromoDate.setDate(1, new java.sql.Date(endDate.getTimeInMillis()));
+            preparedStatementPromoDate.setDate(1, java.sql.Date.valueOf(endDate));
             preparedStatementPromoDate.setInt(2, newCode);
             preparedStatementPromoDate.setString(3, code);
             preparedStatementPromoDate.execute();

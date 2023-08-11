@@ -5,6 +5,7 @@ import Model.*;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Map;
@@ -72,11 +73,11 @@ public class ApplicationManager {
             itemsObjectTab[i][6] = items.get(i).getStockQuantity();
             itemsObjectTab[i][7] = items.get(i).getThresholdLimit();
             itemsObjectTab[i][8] = items.get(i).getAutomaticOrder();
-            itemsObjectTab[i][9] = items.get(i).getSaleDate().getTime().toGMTString();;
+            itemsObjectTab[i][9] = items.get(i).getSaleDate().toString();;
             if(items.get(i).getReductionPoints() != null)
                 itemsObjectTab[i][10] = items.get(i).getReductionPoints();
             if(items.get(i).getProductionDate() != null)
-                itemsObjectTab[i][11] = items.get(i).getProductionDate().getTime().toGMTString();
+                itemsObjectTab[i][11] = items.get(i).getProductionDate().toString();
         }
 
         return itemsObjectTab;
@@ -132,8 +133,13 @@ public class ApplicationManager {
             promosItemsBrandObjectTab[i][0] = promosItemBrand.get(i).getName();
             promosItemsBrandObjectTab[i][1] = promosItemBrand.get(i).getCatalogPrice();
             promosItemsBrandObjectTab[i][2] = promosItemBrand.get(i).getPercent_rate();
-            promosItemsBrandObjectTab[i][3] = promosItemBrand.get(i).getStart_date().getTime().toString();
-            promosItemsBrandObjectTab[i][4] = promosItemBrand.get(i).getEnd_date().getTime().toString();
+            promosItemsBrandObjectTab[i][3] = promosItemBrand.get(i).getStart_date().toString();
+            promosItemsBrandObjectTab[i][4] = promosItemBrand.get(i).getEnd_date().toString();
+
+            /*
+            promosItemsBrandObjectTab[i][3] = promosItemBrand.get(i).getStart_date().toLocalDate().toString();
+            promosItemsBrandObjectTab[i][4] = promosItemBrand.get(i).getEnd_date().toLocalDate().toString();
+             */
         }
 
         return promosItemsBrandObjectTab;
@@ -154,7 +160,7 @@ public class ApplicationManager {
         return affairDetailsObjectTab;
     }
 
-    public Object[][] getExpiredBatches(GregorianCalendar date) throws SQLException{
+    public Object[][] getExpiredBatches(LocalDate date) throws SQLException{
         ArrayList<ExpiredBatch> expiredBatches = queryDao.getExpiredBatches(date);
         Object[][] expiredBatchesObjectTab = new Object[expiredBatches.size()][nameColumnExpiredBatches.length];
 
@@ -162,9 +168,9 @@ public class ApplicationManager {
             expiredBatchesObjectTab[i][0] = expiredBatches.get(i).getItemName();
             expiredBatchesObjectTab[i][1] = expiredBatches.get(i).getCode();
             expiredBatchesObjectTab[i][2] = expiredBatches.get(i).getQuantity();
-            expiredBatchesObjectTab[i][3] = expiredBatches.get(i).getDate().getTime().toString();
+            expiredBatchesObjectTab[i][3] = expiredBatches.get(i).getDate().toString();
             if(expiredBatches.get(i).getDeliveryDate() != null)
-                expiredBatchesObjectTab[i][4] = expiredBatches.get(i).getDeliveryDate().getTime().toString();
+                expiredBatchesObjectTab[i][4] = expiredBatches.get(i).getDeliveryDate().toString();
             expiredBatchesObjectTab[i][5] = expiredBatches.get(i).getActorName();
         }
 
@@ -187,7 +193,7 @@ public class ApplicationManager {
         return promoHistories;
     }
 
-    public boolean updatePromo(BigDecimal percentRate, GregorianCalendar endDate, String code) throws SQLException{
+    public boolean updatePromo(BigDecimal percentRate, LocalDate endDate, String code) throws SQLException{
         boolean isUpdated = queryDao.updatePromo(percentRate, endDate, code);
 
         return isUpdated;

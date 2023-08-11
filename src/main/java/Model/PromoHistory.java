@@ -1,15 +1,15 @@
 package Model;
 
 import java.math.BigDecimal;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class PromoHistory {
     private int code;
     private BigDecimal percentRate;
-    private GregorianCalendar startDate;
-    private GregorianCalendar endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public PromoHistory(int code, BigDecimal percentRate, GregorianCalendar startDate, GregorianCalendar endDate) {
+    public PromoHistory(int code, BigDecimal percentRate, LocalDate startDate, LocalDate endDate) {
         this.code = code;
         this.percentRate = percentRate;
         this.startDate = startDate;
@@ -24,11 +24,11 @@ public class PromoHistory {
         return percentRate;
     }
 
-    public GregorianCalendar getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public GregorianCalendar getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 }

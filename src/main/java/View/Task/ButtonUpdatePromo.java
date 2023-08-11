@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.GregorianCalendar;
 
 public class ButtonUpdatePromo implements ActionListener {
 
@@ -19,7 +18,7 @@ public class ButtonUpdatePromo implements ActionListener {
     private JComboBox<String> endDay, endMonth, endYear;
 
     private BigDecimal percentRate;
-    private GregorianCalendar endDate;
+    private LocalDate endDate;
     private String code;
     private Container container;
 
@@ -53,13 +52,17 @@ public class ButtonUpdatePromo implements ActionListener {
     }
 
     public void setValues() throws AddBigDecimalException, DateException {
-        endDate = new GregorianCalendar(Integer.parseInt((String)endYear.getSelectedItem()), Integer.parseInt((String)endMonth.getSelectedItem()), Integer.parseInt((String)endDay.getSelectedItem()));
+        endDate = LocalDate.of(
+                Integer.parseInt((String) endYear.getSelectedItem()),
+                Integer.parseInt((String) endMonth.getSelectedItem()),
+                Integer.parseInt((String) endDay.getSelectedItem())
+        );
         if(percentText.getText().matches("[0-9]{1,}\\.{0,1}[0-9]{0,}"))
             percentRate = new BigDecimal(percentText.getText());
         else
             throw new AddBigDecimalException(percentText.getText(), "Percent Rate");
         LocalDate actualDate = LocalDate.now();
-        if(actualDate.isAfter(endDate.toZonedDateTime().toLocalDate()))
+        if (actualDate.isAfter(endDate))
             throw new DateException(endDate, "Date (Gregorian)");
     }
 }

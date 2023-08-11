@@ -7,7 +7,7 @@ import Model.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class ApplicationController {
@@ -64,7 +64,7 @@ public class ApplicationController {
         return applicationManager.getAffairDetails(idAffair);
     }
 
-    public Object[][] getExpiredBatches(GregorianCalendar date) throws SQLException{
+    public Object[][] getExpiredBatches(LocalDate  date) throws SQLException{
         return applicationManager.getExpiredBatches(date);
     }
 
@@ -76,7 +76,7 @@ public class ApplicationController {
         return applicationManager.getPromoHistories(code);
     }
 
-    public boolean updatePromo(BigDecimal percentRate, GregorianCalendar endDate, String code) throws SQLException{
+    public boolean updatePromo(BigDecimal percentRate, LocalDate  endDate, String code) throws SQLException{
         return applicationManager.updatePromo(percentRate, endDate, code);
     }
 
