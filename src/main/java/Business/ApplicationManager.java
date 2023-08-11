@@ -156,7 +156,6 @@ public class ApplicationManager {
 
     public Object[][] getExpiredBatches(GregorianCalendar date) throws SQLException{
         ArrayList<ExpiredBatch> expiredBatches = queryDao.getExpiredBatches(date);
-
         Object[][] expiredBatchesObjectTab = new Object[expiredBatches.size()][nameColumnExpiredBatches.length];
 
         for(int i = 0; i < expiredBatches.size(); i++) {
@@ -164,7 +163,8 @@ public class ApplicationManager {
             expiredBatchesObjectTab[i][1] = expiredBatches.get(i).getCode();
             expiredBatchesObjectTab[i][2] = expiredBatches.get(i).getQuantity();
             expiredBatchesObjectTab[i][3] = expiredBatches.get(i).getDate().getTime().toString();
-            expiredBatchesObjectTab[i][4] = expiredBatches.get(i).getDeliveryDate().getTime().toString();
+            if(expiredBatches.get(i).getDeliveryDate() != null)
+                expiredBatchesObjectTab[i][4] = expiredBatches.get(i).getDeliveryDate().getTime().toString();
             expiredBatchesObjectTab[i][5] = expiredBatches.get(i).getActorName();
         }
 

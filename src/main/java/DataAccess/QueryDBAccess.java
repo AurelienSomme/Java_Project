@@ -94,14 +94,18 @@ public class QueryDBAccess implements QueryDataAccess{
 
             GregorianCalendar dateData = new GregorianCalendar();
             GregorianCalendar deliveryDate = new GregorianCalendar();
-            dateData.setTime(data.getDate("date_affair"));
-            deliveryDate.setTime(data.getDate("delivery_date"));
+            dateData.setTime(data.getDate("a.date_affair"));
 
             expiredBatch = new ExpiredBatch(data.getString("i.name"), data.getString("code"),
-                    data.getInt("quantity"), dateData, deliveryDate, data.getString("ac.name"));
+                    data.getInt("quantity"), dateData, data.getString("ac.name"));
+            if(data.getDate("delivery_date") != null) {
+                deliveryDate.setTime(data.getDate("delivery_date"));
+                expiredBatch.setDeliveryDate(deliveryDate);
+            }
 
             expiredBatches.add(expiredBatch);
         }
+
         return expiredBatches;
     }
 

@@ -10,13 +10,17 @@ public class ExpiredBatch {
     private GregorianCalendar deliveryDate;
     private String actorName;
 
-    public ExpiredBatch(String itemName, String code, int quantity, GregorianCalendar date, GregorianCalendar deliveryDate, String actorName){
+    public ExpiredBatch(String itemName, String code, int quantity, GregorianCalendar date, String actorName){
         this.itemName = itemName;
         this.code = code;
         this.quantity = quantity;
         this.date = date;
-        this.deliveryDate = deliveryDate;
+        this.deliveryDate = null;
         this.actorName = actorName;
+    }
+
+    public void setDeliveryDate(GregorianCalendar deliveryDate){
+        this.deliveryDate =  deliveryDate;
     }
 
     public String getItemName() {

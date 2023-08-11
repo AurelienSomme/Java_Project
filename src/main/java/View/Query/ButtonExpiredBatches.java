@@ -33,6 +33,7 @@ public class ButtonExpiredBatches implements ActionListener {
                                         Integer.parseInt((String)dateMonth.getSelectedItem()),
                                         Integer.parseInt((String)dateDay.getSelectedItem()));
         Object[][] expiredBatches;
+
         try {
             expiredBatches = controller.getExpiredBatches(date);
 
