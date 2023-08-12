@@ -55,14 +55,12 @@ public class FormUpdatePanel extends JPanel {
         vat = new JLabel("VAT : " + item.getVAT());
         stockQuantity = new JLabel("Stock Quantity : " + item.getStockQuantity());
         thresholdLimit = new JLabel("Threshold Limit : " + item.getThresholdLimit());
-        System.out.println("5");
+
         automaticOrder = new JLabel("Automatic Order : " + item.getAutomaticOrder());
         saleDate = new JLabel("Sale Date : " + item.getSaleDate().toString());
-        System.out.println("5.5");
         //Optional
         reductionPoint = new JLabel("Reduction Points : " + item.getReductionPoints());
         productionDate = new JLabel("Prod Date : " + (item.getProductionDate() == null ? "null" : item.getProductionDate().toString()));
-        System.out.println("6");
         //Init items
 
         nameText = new JTextField();

@@ -29,7 +29,6 @@ public class ButtonGetItem implements ActionListener {
         try {
             setCode();
             item = controller.getItem(code);
-            System.out.println(item);
             if(item == null){
                 JOptionPane.showMessageDialog(null, "Item not found", "Error", JOptionPane.ERROR_MESSAGE);
             }

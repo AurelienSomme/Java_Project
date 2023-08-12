@@ -28,7 +28,6 @@ public class ItemDBAccess implements ItemDataAccess{
             LocalDate localProdDate = LocalDate.now(); // Date actuelle
             LocalDate localSaleDate = data.getDate("sale_date").toLocalDate(); // Conversion en LocalDate
 
-            System.out.println("1");
             item = new Item(data.getString("code"), data.getInt("ref_brand"), data.getString("name"),
                     data.getBigDecimal("catalog_price"), data.getString("packaging"),
                     data.getBigDecimal("VAT"), data.getBigDecimal("stock_quantity"),
@@ -42,7 +41,6 @@ public class ItemDBAccess implements ItemDataAccess{
                 item.setReductionPoints(data.getBigDecimal("reduction_points"));
             }
         }
-        System.out.println("2");
         return item;
     }
 
@@ -99,7 +97,6 @@ public class ItemDBAccess implements ItemDataAccess{
             String sqlInstruction = "INSERT INTO item VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            System.out.println(item);
             preparedStatement.setString(1, item.getCode());
             preparedStatement.setInt(2, item.getRefBrand());
             preparedStatement.setString(3, item.getName());
