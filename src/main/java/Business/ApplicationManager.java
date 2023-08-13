@@ -21,6 +21,7 @@ public class ApplicationManager {
     private String[] nameColumnPromo = {"Name", "Catalog Price", "Percent Rate", "Start Date", "End Date"};
     private String[] nameColumnExpiredBatches = {"Name Item", "Code", "Quantity", "Date", "Delivery Date", "Name Actor"};
     private String[] nameColumnAffair = {"Brand Name", "Item Name", "Quantity", "Price"};
+    private String[] nameColumnBrand = {"Id", "Nom", "CEO", "Date de creation", "Description"};
 
     public ApplicationManager() throws SQLException {
         setDao();
@@ -175,6 +176,21 @@ public class ApplicationManager {
         }
 
         return expiredBatchesObjectTab;
+    }
+
+    public Object[][] getAllBrands() throws SQLException{
+        ArrayList<Brand> brands = brandDao.getAllBrands();
+        Object[][] brandsObjectTab = new Object[brands.size()][nameColumnBrand.length];
+
+        for(int i = 0; i < brands.size(); i++) {
+            brandsObjectTab[i][0] = brands.get(i).getIdBrand();
+            brandsObjectTab[i][1] = brands.get(i).getName();
+            brandsObjectTab[i][2] = brands.get(i).getCEO();
+            brandsObjectTab[i][3] =  brands.get(i).getCreationDate().toString();
+            if(brands.get(i).getDescription() != null)
+                brandsObjectTab[i][4] = brands.get(i).getDescription();
+        }
+        return brandsObjectTab;
     }
 
 

@@ -1,10 +1,13 @@
 package DataAccess;
 
 
+import Model.Brand;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BrandDBAccess implements BrandDataAccess{
@@ -27,5 +30,25 @@ public class BrandDBAccess implements BrandDataAccess{
         }
 
         return idsBrands;
+    }
+
+
+    @Override
+    public ArrayList<Brand> getAllBrands() throws SQLException{
+        ArrayList<Brand> brands = new ArrayList<>();
+        String instruction = "SELECT * FROM brand;";
+        PreparedStatement preparedStatement = connection.prepareStatement(instruction);
+        ResultSet data = preparedStatement.executeQuery();
+
+        while (data.next()){
+            Brand brand;
+            LocalDate creationDate = data.getDate("creation_date").toLocalDate();
+            brand = new Brand(data.getInt("id_brand"), data.getString("name"), data.getString("CEO"), creationDate);
+            if(data.getString("description") != null)
+                brand.setDescription(data.getString("description"));
+            brands.add(brand);
+        }
+
+        return brands;
     }
 }

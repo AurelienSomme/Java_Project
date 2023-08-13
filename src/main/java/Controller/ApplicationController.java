@@ -68,6 +68,10 @@ public class ApplicationController {
         return applicationManager.getExpiredBatches(date);
     }
 
+    public Object[][] getAllBrands() throws SQLException{
+        return applicationManager.getAllBrands();
+    }
+
     public ArrayList<LeastSoldItem> getLeastSoldItems(int nbItems, int nbMonths) throws SQLException{
         return applicationManager.getLeastSoldItems(nbItems, nbMonths);
     }

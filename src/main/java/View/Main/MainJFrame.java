@@ -23,7 +23,7 @@ public class MainJFrame extends JFrame {
     private JMenu menuItem, menuSearch;
 
     private JMenuItem addMenu, deleteMenu, updateMenu, displayMenu;
-    private JMenuItem queryMenu, taskMenu;
+    private JMenuItem queryMenu, taskMenu, brandMenu;
 
     private JPanel main;
     private Footer footer;
@@ -95,6 +95,7 @@ public class MainJFrame extends JFrame {
         displayMenu = new JMenuItem("Display");
         queryMenu = new JMenuItem("Query");
         taskMenu = new JMenuItem("Task");
+        brandMenu = new JMenuItem("Brand");
 
 
         menuItem.add(addMenu);
@@ -103,6 +104,7 @@ public class MainJFrame extends JFrame {
         menuItem.add(displayMenu);
         menuSearch.add(queryMenu);
         menuSearch.add(taskMenu);
+        menuSearch.add(brandMenu);
 
 
         menuBar.add(menuItem);
@@ -145,6 +147,9 @@ public class MainJFrame extends JFrame {
         ButtonTaskPanel  buttonTaskPanel = new ButtonTaskPanel(controller);
         taskMenu.addActionListener(buttonTaskPanel);
 
+        //Brand Button
+        ButtonBrandPanel buttonBrandPanel = new ButtonBrandPanel(main, controller);
+        brandMenu.addActionListener(buttonBrandPanel);
 
         //Refresh display
         revalidate();
